@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160813142145) do
+ActiveRecord::Schema.define(version: 20160813142314) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 20160813142145) do
     t.integer "stargazers_count"
     t.integer "forks_count"
     t.integer "user_id"
+    t.index ["full_name"], name: "index_repositories_on_full_name", unique: true, using: :btree
     t.index ["user_id"], name: "index_repositories_on_user_id", using: :btree
   end
 
