@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160813120355) do
+ActiveRecord::Schema.define(version: 20160813142145) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 20160813120355) do
     t.string "login",      null: false
     t.string "html_url"
     t.string "avatar_url"
+    t.index ["login"], name: "index_users_on_login", unique: true, using: :btree
   end
 
   add_foreign_key "repositories", "users"
