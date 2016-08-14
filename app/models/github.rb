@@ -22,14 +22,22 @@ class Github
 
   def import
     each_repositories do |repo|
-      next unless rails?(repo)
-      repository = client.repository(repo.full_name)
       begin
-        Repository.create!(repository.to_h.slice(*REPOSITORY_ATTRIBUTES))
-        User.create!(repository.owner.to_h.slice(*USER_ATTRIBUTES))
+        next unless rails?(repo)
+        repository = client.repository(repo.full_name)
+
+        next if Repository.exists?(full_name: repository.full_name)
+
+        user = User.find_or_create_by!(login: repository.owner.login) do |user|
+          user.assign_attributes(repository.owner.to_h.slice(*USER_ATTRIBUTES))
+        end
+        user.repositories.create!(repository.to_h.slice(*REPOSITORY_ATTRIBUTES))
       rescue ActiveRecord::RecordNotUnique => e
         Rails.logger.error e
-        Rails.logger.error e.record.attributes
+      rescue Octokit::Error => e
+        Rails.logger.error e
+      rescue => e
+        Rails.logger.error e
       end
     end
   end
