@@ -34,10 +34,13 @@ class Github
         user.repositories.create!(repository.to_h.slice(*REPOSITORY_ATTRIBUTES))
       rescue ActiveRecord::RecordNotUnique => e
         Rails.logger.error e
+        Rails.logger.error repo.to_s
       rescue Octokit::Error => e
         Rails.logger.error e
+        Rails.logger.error repo.to_s
       rescue => e
         Rails.logger.error e
+        Rails.logger.error repo.to_s
       end
     end
   end
