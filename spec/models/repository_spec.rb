@@ -11,5 +11,9 @@ RSpec.describe Repository, type: :model do
     describe '#full_name' do
       it { is_expected.to validate_presence_of :full_name }
     end
+
+    describe 'belongs_to :user' do
+      it { is_expected.to belong_to :user }
+    end
   end
 end
