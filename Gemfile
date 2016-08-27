@@ -34,6 +34,11 @@ gem 'octokit'
 gem 'slim-rails'
 gem 'bootstrap'
 
+# https://github.com/twbs/bootstrap-rubygem#a-ruby-on-rails
+source 'https://rails-assets.org' do
+  gem 'rails-assets-tether', '>= 1.1.0'
+end
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
