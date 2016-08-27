@@ -1,1 +1,15 @@
-
+= render 'components/menu'
+div.repos
+  div.repos-table.col-md-8.offset-md-2
+    table.table.striped-rows.table-hover
+      thead.thead-inverse
+        tr
+          th #
+          th Name
+          th Star
+      tbody
+        - @repository.find_each.with_index(1) do |repo, i|
+          tr
+            th = i
+            td: a[href="#"] = repo.full_name
+            td = repo.stargazers_count
