@@ -65,9 +65,6 @@ GEM
     ffi (1.9.14)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
-    hpricot (0.8.6)
-    html2slim (0.2.0)
-      hpricot
     i18n (0.7.0)
     jbuilder (2.6.0)
       activesupport (>= 3.0.0, < 5.1)
@@ -206,7 +203,6 @@ DEPENDENCIES
   byebug
   coffee-rails (~> 4.2)
   factory_girl_rails
-  html2slim
   jbuilder (~> 2.5)
   jquery-rails
   listen (~> 3.0.5)
