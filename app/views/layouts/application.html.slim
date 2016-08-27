@@ -7,6 +7,8 @@ html
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
   body
-    = render partial: 'shared/navbar'
-    = yield
-    = render partial: 'shared/footer'
+    div.main
+      = render partial: 'shared/navbar'
+      div.container
+        = yield
+      = render partial: 'shared/footer'
