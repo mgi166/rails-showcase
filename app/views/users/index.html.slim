@@ -1,2 +1,14 @@
-h1 Users#index
-p Find me in app/views/users/index.html.slim
+div.users
+  div.users-table.col-md-8.offset-md-2
+    table.table.striped-rows.table-hover
+      thead.thead-inverse
+        tr
+          th #
+          th Name
+          th Rails repositories
+      tbody
+        - @users.find_each.with_index(1) do |user, i|
+          tr
+            th: img.avatar-img-sm[src=user.avatar_url]
+            td: a[href=user.html_url] = user.login
+            td = 1
