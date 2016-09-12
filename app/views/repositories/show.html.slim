@@ -1,0 +1,14 @@
+div.repo
+  div.user-stats.col-md-3
+    img[src=@repository.user.avatar_url]
+  div.repo-stats.col-md-9
+    table.table.table-hover
+      tbody
+        tr
+          td = @repository.full_name
+        tr
+          td = @repository.description
+        tr
+          td = @repository.stargazers_count
+        tr
+          td = @repository.forks_count

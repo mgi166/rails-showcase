@@ -11,5 +11,5 @@ div.repos
         - @repository.find_each.with_index(1) do |repo, i|
           tr
             th = i
-            td: a[href=repo.html_url] = repo.full_name
+            td: a[href=repository_path(repo)] = repo.full_name
             td = repo.stargazers_count
