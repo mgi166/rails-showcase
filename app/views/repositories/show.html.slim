@@ -1,14 +1,24 @@
-div.repo
+div.repo.container
   div.user-stats.col-md-3
-    img[src=@repository.user.avatar_url]
+    div.row
+      a[href=@repository.user.html_url]
+        img[src=@repository.user.avatar_url]
+    div.row
+      h2 = @repository.user.login
   div.repo-stats.col-md-9
-    table.table.table-hover
-      tbody
-        tr
-          td = @repository.full_name
-        tr
-          td = @repository.description
-        tr
-          td = @repository.stargazers_count
-        tr
-          td = @repository.forks_count
+    div.row
+      h2.display-4: a[href=@repository.html_url] = @repository.full_name
+    div.row
+      br
+    div.row
+      p.lead = @repository.description
+    div.row
+      table.table
+        thead.thead-default
+          tr
+            th Stars
+            th Forks
+        tbody
+          tr
+            td = @repository.stargazers_count
+            td = @repository.forks_count

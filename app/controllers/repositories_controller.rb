@@ -1,5 +1,5 @@
 class RepositoriesController < ApplicationController
-  before_action :set_repository
+  before_action :set_repository, only: [:show]
 
   def index
     @repository = Repository.all
