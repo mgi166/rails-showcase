@@ -8,6 +8,8 @@ class RepositoriesController < ApplicationController
   def show
   end
 
+  private
+
   def set_repository
     @repository = Repository.find(params[:id])
   end

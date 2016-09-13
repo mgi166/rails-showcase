@@ -15,10 +15,10 @@ RSpec.describe "Repositories", type: :request do
       it_behaves_like 'HTTP 200 OK'
     end
 
-    context 'when repository does not exist' do
+    xcontext 'when repository does not exist' do
       subject { get "/repositories/0" }
 
-      it_behaves_like 'HTTP 200 OK'
+      it_behaves_like 'HTTP 404 Not Found'
     end
   end
 end
