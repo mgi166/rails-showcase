@@ -17,7 +17,7 @@ div.user.container
         = @user.repositories.find_each do |repo|
           tr
             td: a[href=repository_path(repo)] = repo.name
-            td = repo.stargazers_count
+            td: i.fa.fa-star[aria-hidden="true"] = repo.stargazers_count
 
     div.row
       / See other repositories
