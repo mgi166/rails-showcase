@@ -1,3 +1,10 @@
+GIT
+  remote: git://github.com/torbjon/octicons-rails.git
+  revision: cdf8f706f11886cb494e667118170fdef5902896
+  specs:
+    octicons-rails (3.5.0)
+      railties (>= 3.2, < 5.1)
+
 GEM
   remote: https://rubygems.org/
   remote: https://rails-assets.org/
@@ -222,6 +229,7 @@ DEPENDENCIES
   jbuilder (~> 2.5)
   jquery-rails
   listen (~> 3.0.5)
+  octicons-rails!
   octokit
   pg (~> 0.18)
   pry-byebug

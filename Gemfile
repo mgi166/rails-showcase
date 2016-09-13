@@ -33,6 +33,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'octokit'
 gem 'slim-rails'
 gem 'bootstrap'
+gem 'octicons-rails', github: 'torbjon/octicons-rails'
 
 # https://github.com/twbs/bootstrap-rubygem#a-ruby-on-rails
 source 'https://rails-assets.org' do
