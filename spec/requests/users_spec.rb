@@ -19,7 +19,7 @@ RSpec.describe "Users", type: :request do
     context 'when user does not exist' do
       subject { get "/users/0" }
 
-      it_behaves_like 'HTTP 200 OK'
+      it_behaves_like 'HTTP 404 Not Found'
     end
   end
 end
