@@ -4,7 +4,8 @@ div.user.container
       a[href=user_path(@user)]
         img[src=@user.avatar_url]
     div.row
-      h2: a[href=@user.html_url] = @user.login
+      h2: span.mega-octicon.octicon-octoface
+          strong: a[href=@user.html_url] = @user.login
   div.repos.col-md-9
     div.row
       table.table
