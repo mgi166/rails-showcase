@@ -20,5 +20,5 @@ div.repo.container
             th Forks
         tbody
           tr
-            td = @repository.stargazers_count
-            td = @repository.forks_count
+            td: i.fa.fa-star[aria-hidden="true"] = @repository.stargazers_count
+            td: span.octicon.octicon-repo-forked = @repository.forks_count
