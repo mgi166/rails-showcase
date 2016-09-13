@@ -12,4 +12,4 @@ div.repos
           tr
             th = i
             td: a[href=repository_path(repo)] = repo.full_name
-            td = repo.stargazers_count
+            td: i.fa.fa-star[aria-hidden="true"] = repo.stargazers_count
