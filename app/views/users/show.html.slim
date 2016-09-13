@@ -1,0 +1,23 @@
+div.user.container
+  div.user-stats.col-md-3
+    div.row
+      a[href=user_path(@user)]
+        img[src=@user.avatar_url]
+    div.row
+      h2: a[href=@user.html_url] = @user.login
+  div.repos.col-md-9
+    div.row
+      table.table
+        thead.thead-inverse
+          tr
+            th Repository name
+            th Stars
+        tbody
+        = @user.repositories.find_each do |repo|
+          tr
+            td: a[href=repository_path(repo)] = repo.name
+            td = repo.stargazers_count
+
+    div.row
+      / See other repositories
+      / view on github
