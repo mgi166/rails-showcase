@@ -6,6 +6,7 @@ class RepositoriesController < ApplicationController
   end
 
   def show
+    @user = @repository.user
   end
 
   private
