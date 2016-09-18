@@ -25,3 +25,11 @@ img.avatar-img-sm {
     padding-top: 12px;
     padding-bottom: 12px;
 }
+
+.jumbotron {
+    background: url('/assets/jumbotron_background_image.jpg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: white;
+}
