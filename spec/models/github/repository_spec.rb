@@ -5,8 +5,6 @@ RSpec.describe Github::Repository, type: :model do
     subject { repository.rails? }
     let(:repository) { Github::Repository.new('user/repo') }
 
-
-
     context 'when repository is rails application' do
       before { allow(repository).to receive(:gemfile_contents).and_return("gem 'rails'") }
       it { is_expected.to be true }
