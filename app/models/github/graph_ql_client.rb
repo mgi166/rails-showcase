@@ -42,10 +42,8 @@ module Github
               edges {
                 node {
                   name
-                  isFork
                   isLocked
                   isMirror
-                  isPrivate
                   description
                   homepageURL
                   forks {
