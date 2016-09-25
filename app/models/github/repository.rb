@@ -1,9 +1,13 @@
 module Github
   class Repository
-    attr_reader :full_name, :client
+    attr_reader :full_name, :client, :description, :html_url, :stargazers_count, :forks_count
 
-    def initialize(full_name)
+    def initialize(full_name, description: nil, html_url: nil, stargazers_count: nil, forks_count: nil)
       @full_name = full_name
+      @description = description
+      @html_url = html_url
+      @stargazers_count = stargazers_count
+      @forks_count = forks_count
       @client = Octokit::Client.new(access_token: ENV['GITHUB_ACCESS_TOKEN'])
     end
 
