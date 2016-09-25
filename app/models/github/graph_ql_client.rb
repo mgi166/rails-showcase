@@ -17,7 +17,7 @@ module Github
     def repository_owner(owner_name, repository_opts: {})
       graphql = repository_owner_query(owner_name, after: repository_opts[:after])
       query = define_query(graphql)
-      client.query(query)
+      Hashie::Mash.new(client.query(query).data.to_h)
     end
 
     private
