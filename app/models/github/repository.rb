@@ -11,6 +11,16 @@ module Github
       @client = Octokit::Client.new(access_token: ENV['GITHUB_ACCESS_TOKEN'])
     end
 
+    def attributes
+      {
+        full_name: full_name,
+        description: description,
+        html_url: html_url,
+        stargazers_count: stargazers_count,
+        forks_count: forks_count,
+      }.stringify_keys
+    end
+
     def rails?
       !!gems.find { |gem| gem.name == 'rails' }
     rescue Octokit::NotFound

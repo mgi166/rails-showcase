@@ -1,6 +1,40 @@
 require 'rails_helper'
 
 RSpec.describe Github::Repository, type: :model do
+  describe '#attributes' do
+    subject { repository.attributes }
+
+    context 'given no attributes' do
+      let(:repository) { Github::Repository.new('user/repo') }
+
+      it do
+        attributes = {
+          "full_name" => "user/repo",
+          "description" => nil,
+          "html_url" => nil,
+          "stargazers_count" => nil,
+          "forks_count" => nil,
+        }
+        is_expected.to eq(attributes)
+      end
+    end
+
+    context 'given attributes' do
+      let(:repository) { Github::Repository.new('user/repo', description: "test", html_url: "http://github.com", stargazers_count: 1, forks_count: 2) }
+
+      it do
+        attributes = {
+          "full_name" => "user/repo",
+          "description" => 'test',
+          "html_url" => 'http://github.com',
+          "stargazers_count" => 1,
+          "forks_count" => 2,
+        }
+        is_expected.to eq(attributes)
+      end
+    end
+  end
+
   describe '#rails?' do
     subject { repository.rails? }
     let(:repository) { Github::Repository.new('user/repo') }
