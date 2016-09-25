@@ -1,9 +1,10 @@
 module Github
   class Repository
-    attr_reader :full_name, :client, :description, :html_url, :stargazers_count, :forks_count
+    attr_reader :name, :full_name, :client, :description, :html_url, :stargazers_count, :forks_count
 
     def initialize(full_name, description: nil, html_url: nil, stargazers_count: nil, forks_count: nil)
       @full_name = full_name
+      @name = full_name.to_s.split('/').last
       @description = description
       @html_url = html_url
       @stargazers_count = stargazers_count
@@ -13,6 +14,7 @@ module Github
 
     def attributes
       {
+        name: name,
         full_name: full_name,
         description: description,
         html_url: html_url,
@@ -33,8 +35,8 @@ module Github
 
     # @raise [Octokit::NotFound] If `Gemfile` does not exist in repository, raise Octokit::NotFound
     def gemfile_contents
-      contents = client.contents(full_name, path: 'Gemfile').contents
-      Base64.decode(contents)
+      content = client.contents(full_name, path: 'Gemfile').content
+      Base64.decode64(content)
     end
 
     # @raise [Bundler::Dsl::DSLError] If parsing `Gemfile` is failed, raise Bundler::Dsl::DSLError
