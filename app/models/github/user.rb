@@ -1,4 +1,4 @@
-class Github
+module Github
   class User
     attr_reader :client
 
