@@ -1,11 +1,5 @@
 module Github
   class Importer
-    attr_reader :graphql_client
-
-    def initialize
-      @graphql_client = GraphQLClient.new
-    end
-
     def import_all
       Github::User.each do |user|
         Github::Repository.each(user.login) do |repo|
