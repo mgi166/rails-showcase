@@ -12,6 +12,16 @@ module Github
       @client = Octokit::Client.new(access_token: ENV['GITHUB_ACCESS_TOKEN'])
     end
 
+    def rails?
+      !!gems.find { |gem| gem.name == 'rails' }
+    rescue Octokit::Error
+      false
+    rescue Bundler::Dsl::DSLError
+      false
+    end
+
+    private
+
     def attributes
       {
         name: name,
@@ -22,16 +32,6 @@ module Github
         forks_count: forks_count,
       }.stringify_keys
     end
-
-    def rails?
-      !!gems.find { |gem| gem.name == 'rails' }
-    rescue Octokit::Error
-      false
-    rescue Bundler::Dsl::DSLError
-      false
-    end
-
-    private
 
     # @raise [Octokit::NotFound] If `Gemfile` does not exist in repository, raise Octokit::NotFound
     # @raise [Octokit::RepositoryUnavailable]
