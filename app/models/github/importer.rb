@@ -22,6 +22,16 @@ module Github
       create_user(user)
     end
 
+    def import_repos(login)
+      user = Github::User.find_by_username(login)
+      Github::Repository.each(user.login) do |repo|
+        if repo.rails?
+          u = create_user(user)
+          create_repo(repo, u)
+        end
+      end
+    end
+
     private
 
     def create_user(user)
