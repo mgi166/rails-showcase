@@ -1,5 +1,17 @@
 module Github
   class Importer
+    def self.import_all
+      new.import_all
+    end
+
+    def self.import_user(login)
+      new.import_user(login)
+    end
+
+    def self.import_repos(login)
+      new.import_repos(login)
+    end
+
     def import_all
       Github::User.each do |user|
         Github::Repository.each(user.login) do |repo|
