@@ -16,6 +16,10 @@ module Github
       @client = Octokit::Client.new(access_token: ENV['GITHUB_ACCESS_TOKEN'])
     end
 
+    def find_by_username(username)
+      client.user(username)
+    end
+
     def find_each
       return to_enum unless block_given?
 
