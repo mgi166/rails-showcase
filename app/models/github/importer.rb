@@ -1,7 +1,7 @@
 module Github
   class Importer
-    def self.import_all
-      new.import_all
+    def self.import_all(since: nil)
+      new.import_all(since: since)
     end
 
     def self.import_user(login)
@@ -12,8 +12,8 @@ module Github
       new.import_repos(login)
     end
 
-    def import_all
-      Github::User.each do |user|
+    def import_all(since: nil)
+      Github::User.each(since: since) do |user|
         Github::Repository.each(user.login) do |repo|
           if repo.rails?
             u = create_user(user)

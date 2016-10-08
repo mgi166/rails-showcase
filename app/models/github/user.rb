@@ -4,12 +4,12 @@ module Github
 
     include Enumerable
 
-    def self.each(&block)
-      new.each(&block)
+    def self.each(since: nil, &block)
+      new.each(since: since, &block)
     end
 
-    def self.find_each(&block)
-      new.find_each(&block)
+    def self.find_each(since: nil, &block)
+      new.find_each(since: since, &block)
     end
 
     def initialize
@@ -20,20 +20,18 @@ module Github
       client.user(username)
     end
 
-    def find_each
+    def find_each(since: nil)
       return to_enum unless block_given?
 
-      since = nil
       until (users = client.all_users(since: since)).empty?
         yield users
         since = user.last.id
       end
     end
 
-    def each
+    def each(since: nil)
       return to_enum unless block_given?
 
-      since = nil
       until (users = client.all_users(since: since)).empty?
         users.each do |user|
           yield user
