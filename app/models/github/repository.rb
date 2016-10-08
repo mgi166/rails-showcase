@@ -2,6 +2,11 @@ module Github
   class Repository
     attr_reader :name, :full_name, :client, :description, :html_url, :stargazers_count, :forks_count
 
+    def self.each(login, &block)
+      return to_enum unless block_given?
+      Github::RepositoryCollection.each_repos(login, &block)
+    end
+
     def initialize(full_name, description: nil, html_url: nil, stargazers_count: nil, forks_count: nil)
       @full_name = full_name
       @name = full_name.to_s.split('/').last
@@ -11,6 +16,20 @@ module Github
       @forks_count = forks_count
       @client = Octokit::Client.new(access_token: ENV['GITHUB_ACCESS_TOKEN'])
     end
+
+    def rails?
+      !!gems.find { |gem| gem.name == 'rails' }
+    rescue Octokit::Error
+      false
+    rescue Bundler::Dsl::DSLError
+      false
+    end
+
+    def create!(user)
+      ::Repository.create!(attributes.merge(user: user))
+    end
+
+    private
 
     def attributes
       {
@@ -22,16 +41,6 @@ module Github
         forks_count: forks_count,
       }.stringify_keys
     end
-
-    def rails?
-      !!gems.find { |gem| gem.name == 'rails' }
-    rescue Octokit::Error
-      false
-    rescue Bundler::Dsl::DSLError
-      false
-    end
-
-    private
 
     # @raise [Octokit::NotFound] If `Gemfile` does not exist in repository, raise Octokit::NotFound
     # @raise [Octokit::RepositoryUnavailable]

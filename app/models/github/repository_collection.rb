@@ -1,5 +1,5 @@
 module Github
-  class RepositoryOwner
+  class RepositoryCollection
     attr_reader :login, :graphql_client
 
     def initialize(login)
@@ -21,7 +21,14 @@ module Github
         result = graphql_client.repository_owner(login, repository_opts: { after: after })
 
         result.repositoryOwner.repositories.edges.each do |edge|
-          yield edge.node
+          node = edge.node
+          yield Github::Repository.new(
+            "#{login}/#{node.name}",
+            description: node.description,
+            html_url: node.homepageURL,
+            forks_count: node.forks.totalCount,
+            stargazers_count: node.stargazers.totalCount,
+          )
         end
 
         page_info = result.repositoryOwner.repositories.pageInfo
