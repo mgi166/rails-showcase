@@ -21,12 +21,11 @@ module Github
 
     def rails?
       !!gems.find { |gem| gem.name == 'rails' }
-    rescue Octokit::Error
+    rescue Octokit::Error, Bundler::Dsl::DSLError, NoContentGemfile
       false
-    rescue Bundler::Dsl::DSLError
-      false
-    rescue NoContentGemfile
-      false
+    rescue => e
+      Rails.logger.info(attributes)
+      raise e
     end
 
     def create!(user)
