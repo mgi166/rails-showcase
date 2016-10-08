@@ -20,6 +20,10 @@ module Github
       false
     end
 
+    def create!(user)
+      ::Repository.create!(attributes.merge(user: user))
+    end
+
     private
 
     def attributes
