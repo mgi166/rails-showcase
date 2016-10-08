@@ -15,10 +15,7 @@ module Github
     def import_all(since: nil)
       Github::User.each(since: since) do |user|
         Github::Repository.each(user.login) do |repo|
-          if repo.rails?
-            u = create_user(user)
-            create_repo(repo, u)
-          end
+          create_resouces!(user, repo)
         end
       end
     end
@@ -31,14 +28,17 @@ module Github
     def import_repos(login)
       user = Github::User.find_by_username(login)
       Github::Repository.each(user.login) do |repo|
-        if repo.rails?
-          u = create_user(user)
-          create_repo(repo, u)
-        end
+        create_resouces!(user, repo)
       end
     end
 
     private
+
+    def create_resouces!(user, repo)
+      return unless repo.rails?
+      u = create_user(user)
+      create_repo(repo, u)
+    end
 
     def create_user(user)
       ::User.find_or_create_by!(login: user.login) do |u|
