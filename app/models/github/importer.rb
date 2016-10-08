@@ -38,7 +38,7 @@ module Github
     end
 
     def create_repo(repo, user)
-      ::Repository.create!(repo.attributes.merge(user: user))
+      repo.create!(user)
     rescue ActiveRecord::RecordNotUnique
     end
   end
