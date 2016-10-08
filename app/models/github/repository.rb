@@ -2,6 +2,8 @@ module Github
   class Repository
     attr_reader :name, :full_name, :client, :description, :html_url, :stargazers_count, :forks_count
 
+    class NoContentGemfile < StandardError; end
+
     def self.each(login, &block)
       return to_enum unless block_given?
       Github::RepositoryCollection.each_repos(login, &block)
@@ -22,6 +24,8 @@ module Github
     rescue Octokit::Error
       false
     rescue Bundler::Dsl::DSLError
+      false
+    rescue NoContentGemfile
       false
     end
 
@@ -52,7 +56,8 @@ module Github
 
     # @raise [Bundler::Dsl::DSLError] If parsing `Gemfile` is failed, raise Bundler::Dsl::DSLError
     def gems
-      @gems ||= Bundler::Dsl.new.eval_gemfile('Gemfile', gemfile_contents)
+      fail NoContentGemfile unless gems = Bundler::Dsl.new.eval_gemfile('Gemfile', gemfile_contents)
+      gems
     end
   end
 end

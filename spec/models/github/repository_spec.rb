@@ -65,6 +65,11 @@ RSpec.describe Github::Repository, type: :model do
         before { allow(repository).to receive(:gemfile_contents).and_return('gem "octokit"') }
         it { is_expected.to be false }
       end
+
+      context '`Gemfile` is empty file' do
+        before { allow(repository).to receive(:gems).and_raise(Github::Repository::NoContentGemfile) }
+        it { is_expected.to be false }
+      end
     end
   end
 end
