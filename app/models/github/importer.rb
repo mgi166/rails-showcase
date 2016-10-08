@@ -8,17 +8,7 @@ module Github
 
     def import_all
       Github::User.each do |user|
-        Github::RepositoryCollection.each_repos(user.login) do |repo|
-          full_name = "#{user.login}/#{repo.name}"
-
-          repo = Github::Repository.new(
-            full_name,
-            description: repo.description,
-            html_url: repo.homepageURL,
-            forks_count: repo.forks.totalCount,
-            stargazers_count: repo.stargazers.totalCount,
-          )
-
+        Github::Repository.each(user.login) do |repo|
           if repo.rails?
             u = create_user(user)
             create_repo(repo, u)

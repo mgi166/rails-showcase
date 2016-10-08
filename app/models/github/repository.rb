@@ -2,6 +2,11 @@ module Github
   class Repository
     attr_reader :name, :full_name, :client, :description, :html_url, :stargazers_count, :forks_count
 
+    def self.each(login, &block)
+      return to_enum unless block_given?
+      Github::RepositoryCollection.each_repos(login, &block)
+    end
+
     def initialize(full_name, description: nil, html_url: nil, stargazers_count: nil, forks_count: nil)
       @full_name = full_name
       @name = full_name.to_s.split('/').last
