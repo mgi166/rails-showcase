@@ -25,7 +25,7 @@ module Github
 
     def rails?
       !!gems.find { |gem| gem.name == 'rails' }
-    rescue Octokit::NotFound
+    rescue Octokit::Error
       false
     rescue Bundler::Dsl::DSLError
       false
@@ -34,6 +34,8 @@ module Github
     private
 
     # @raise [Octokit::NotFound] If `Gemfile` does not exist in repository, raise Octokit::NotFound
+    # @raise [Octokit::RepositoryUnavailable]
+    #
     def gemfile_contents
       content = client.contents(full_name, path: 'Gemfile').content
       Base64.decode64(content)
