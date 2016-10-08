@@ -17,6 +17,11 @@ module Github
       end
     end
 
+    def import_user(login)
+      user = Github::User.find_by_username(login)
+      create_user(user)
+    end
+
     private
 
     def create_user(user)
