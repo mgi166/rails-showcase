@@ -1,5 +1,5 @@
 module Github
-  class RepositoryOwner
+  class RepositoryCollection
     attr_reader :login, :graphql_client
 
     def initialize(login)

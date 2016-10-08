@@ -8,7 +8,7 @@ module Github
 
     def import_all
       Github::User.each do |user|
-        Github::RepositoryOwner.each_repos(user.login) do |repo|
+        Github::RepositoryCollection.each_repos(user.login) do |repo|
           full_name = "#{user.login}/#{repo.name}"
 
           repo = Github::Repository.new(
