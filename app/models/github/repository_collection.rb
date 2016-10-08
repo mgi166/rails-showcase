@@ -21,12 +21,13 @@ module Github
         result = graphql_client.repository_owner(login, repository_opts: { after: after })
 
         result.repositoryOwner.repositories.edges.each do |edge|
+          node = edge.node
           yield Github::Repository.new(
-            "#{login}/#{edge.name}",
-            description: edge.description,
-            html_url: edge.homepageURL,
-            forks_count: edge.forks.totalCount,
-            stargazers_count: edge.stargazers.totalCount,
+            "#{login}/#{node.name}",
+            description: node.description,
+            html_url: node.homepageURL,
+            forks_count: node.forks.totalCount,
+            stargazers_count: node.stargazers.totalCount,
           )
         end
 
