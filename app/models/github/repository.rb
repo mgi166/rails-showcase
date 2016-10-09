@@ -20,7 +20,7 @@ module Github
     end
 
     def rails?
-      !!gems.find { |gem| gem.name == 'rails' }
+      !!gems.find { |gem| gem.respond_to?(:name) && gem.name == 'rails' }
     rescue Octokit::Error, Bundler::Dsl::DSLError, NoContentGemfile
       false
     rescue => e
