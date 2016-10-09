@@ -70,6 +70,11 @@ RSpec.describe Github::Repository, type: :model do
         before { allow(repository).to receive(:gemfile_contents).and_return('') }
         it { is_expected.to be false }
       end
+
+      context '`Gemfile` is too old. and rails does not exist' do
+        before { allow(repository).to receive(:gemfile_contents).and_return(File.read("spec/fixtures/models/github/repository/old_gemfile.1")) }
+        it { is_expected.to be false }
+      end
     end
   end
 end
