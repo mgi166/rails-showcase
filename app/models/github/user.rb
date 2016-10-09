@@ -40,7 +40,7 @@ module Github
         users.each do |user|
           yield user
         end
-        since = user.last.id
+        since = users.last.id
       end
     end
   end
