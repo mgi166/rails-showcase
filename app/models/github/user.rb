@@ -12,6 +12,10 @@ module Github
       new.find_each(since: since, &block)
     end
 
+    def self.find_by_username(username)
+      new.find_by_username(username)
+    end
+
     def initialize
       @client = Octokit::Client.new(access_token: ENV['GITHUB_ACCESS_TOKEN'])
     end
