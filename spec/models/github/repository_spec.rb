@@ -67,7 +67,7 @@ RSpec.describe Github::Repository, type: :model do
       end
 
       context '`Gemfile` is empty file' do
-        before { allow(repository).to receive(:gems).and_raise(Github::Repository::NoContentGemfile) }
+        before { allow(repository).to receive(:gemfile_contents).and_return('') }
         it { is_expected.to be false }
       end
     end
