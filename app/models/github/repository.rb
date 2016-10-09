@@ -56,6 +56,9 @@ module Github
     # @raise [Bundler::Dsl::DSLError] If parsing `Gemfile` is failed, raise Bundler::Dsl::DSLError
     def gems
       fail NoContentGemfile unless gems = Bundler::Dsl.new.eval_gemfile('Gemfile', gemfile_contents)
+
+      # NOTE: If Gemfile contents only "source 'https://rubygems.org'", Return Bundler::Source::Rubygems object.
+      fail NoContentGemfile unless gems.is_a?(Array)
       gems
     end
   end
