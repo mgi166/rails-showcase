@@ -1,7 +1,7 @@
 = render 'shared/menu'
 div.repos
   div.repos-table
-    = paginate @repository
+    = render 'shared/pagination', resources: @repository
     table.table.striped-rows.table-hover
       thead.thead-inverse
         tr
@@ -14,4 +14,4 @@ div.repos
             th = ((params[:page] || 1).to_i - 1) * Kaminari.config.default_per_page + i
             td: a[href=repository_path(repo)] = repo.full_name
             td: i.fa.fa-star[aria-hidden="true"] = repo.stargazers_count
-    = paginate @repository
+    = render 'shared/pagination', resources: @repository
