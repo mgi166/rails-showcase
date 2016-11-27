@@ -2,14 +2,18 @@
 div.users
   div.users-table
     table.table.striped-rows.table-hover
+      = render 'shared/pagination', resources: @users
       thead.thead-inverse
         tr
           th #
           th Name
           th Rails repositories
       tbody
-        - @users.find_each.with_index(1) do |user, i|
+        - @users.each.with_index(1) do |user, i|
           tr
-            th: img.avatar-img-sm[src=user.avatar_url]
-            td: a[href=user_path(user)] = user.login
+            th = ((params[:page] || 1).to_i - 1) * Kaminari.config.default_per_page + i
+            td: img.avatar-img-sm[src=user.avatar_url]
+              a[href=user_path(user)] = user.login
             td = 1
+
+    = render 'shared/pagination', resources: @users
