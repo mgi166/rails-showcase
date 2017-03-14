@@ -2,6 +2,6 @@ div.user-info
   div.row
     div.user-icon
       a[href=user_path(@user)]
-        img[src=@user.avatar_url]
+        img[src=@user.avatar_url height=200 width=200]
   div.row
     h2: a[href=@user.html_url] = @user.login
