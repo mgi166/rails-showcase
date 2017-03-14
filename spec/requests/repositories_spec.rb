@@ -7,16 +7,16 @@ RSpec.describe "Repositories", type: :request do
     it_behaves_like 'HTTP 200 OK'
   end
 
-  describe 'GET /repositories/:id' do
+  describe 'GET /repositories/:name' do
     context 'when repository exists' do
-      subject { get "/repositories/#{repo.id}" }
+      subject { get "/repositories/#{repo.name}" }
       let(:repo) { create(:repository) }
 
       it_behaves_like 'HTTP 200 OK'
     end
 
     xcontext 'when repository does not exist' do
-      subject { get "/repositories/0" }
+      subject { get "/repositories/unknown-name" }
 
       it_behaves_like 'HTTP 404 Not Found'
     end
