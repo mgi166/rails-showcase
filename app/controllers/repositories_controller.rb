@@ -1,4 +1,5 @@
 class RepositoriesController < ApplicationController
+  before_action :set_user, only: [:show]
   before_action :set_repository, only: [:show]
 
   def index
@@ -6,12 +7,15 @@ class RepositoriesController < ApplicationController
   end
 
   def show
-    @user = @repository.user
   end
 
   private
 
+  def set_user
+    @user = User.find_by(login: params[:user_login])
+  end
+
   def set_repository
-    @repository = Repository.find_by(name: params[:name])
+    @repository = @user.repositories.find_by(name: params[:name])
   end
 end
