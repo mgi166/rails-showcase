@@ -9,7 +9,7 @@ RSpec.describe "Users", type: :request do
 
   describe 'GET /users/:id' do
     context 'when user exists' do
-      subject { get "/users/#{user.id}" }
+      subject { get "/users/#{user.login}" }
 
       let(:user) { create(:user) }
 
@@ -17,7 +17,7 @@ RSpec.describe "Users", type: :request do
     end
 
     xcontext 'when user does not exist' do
-      subject { get "/users/0" }
+      subject { get "/users/bad-name" }
 
       it_behaves_like 'HTTP 404 Not Found'
     end
