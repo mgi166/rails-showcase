@@ -3,7 +3,14 @@ div.repo.container
     = render 'shared/user_info'
   div.repo-stats.col-md-9
     div.row
-      h2.display-4: a[href=@repository.html_url] = @repository.full_name
+      h2.display-4: a[href=user_repository_path(@user.login, @repository.name)] = @repository.full_name
+    div.row
+      div.col-md-4
+        div.row
+          div.col-md-2
+            i.fa.fa-github.fa-2x[aria-hidden="true"]
+          div.col-md-2
+            i.fa.fa-home.fa-2x[aria-hidden="true"]
     div.row
       br
     div.row
