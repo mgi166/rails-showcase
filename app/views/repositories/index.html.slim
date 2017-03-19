@@ -12,6 +12,6 @@ div.repos
         - @repositories.each.with_index(1) do |repo, i|
           tr
             th = ((params[:page] || 1).to_i - 1) * Kaminari.config.default_per_page + i
-            td: a[href=user_repository_path(repo.user.login, repo.name)] = repo.full_name
+            td[class="rails-showcase clickable-row"]: a[href=user_repository_path(repo.user.login, repo.name)] = repo.full_name
             td: i.fa.fa-star[aria-hidden="true"] = repo.stargazers_count
     = render 'shared/pagination', resources: @repositories
