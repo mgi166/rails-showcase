@@ -12,7 +12,7 @@ div.users
         - @users.each.with_index(1) do |user, i|
           tr
             th = ((params[:page] || 1).to_i - 1) * Kaminari.config.default_per_page + i
-            td: img.avatar-img-sm[src=user.avatar_url]
+            td[class="rails-showcase clickable-row"]: img.avatar-img-sm[src=user.avatar_url]
               a[href=user_path(user.login)] = user.login
             td = 1
 
