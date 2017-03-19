@@ -8,7 +8,8 @@ div.repo.container
       div.col-md-4
         div.row
           div.col-md-2
-            i.fa.fa-github.fa-2x[aria-hidden="true"]
+            = link_to github_repository_url(@repository) do
+              i.fa.fa-github.fa-2x[aria-hidden="true"]
           div.col-md-2
             i.fa.fa-home.fa-2x[aria-hidden="true"]
     div.row
