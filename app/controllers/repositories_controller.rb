@@ -3,7 +3,7 @@ class RepositoriesController < ApplicationController
   before_action :set_repository, only: [:show]
 
   def index
-    @repositories = Repository.order_by_stargazers.page(params[:page])
+    @repositories = Repository.order_by_stargazers.includes(:user).page(params[:page])
   end
 
   def show
