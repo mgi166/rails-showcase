@@ -5,10 +5,12 @@ nav.navbar.navbar-light.bg-faded
       a.nav-link[href="/repositories"]Repositories
     li.nav-item
       a.nav-link[href="/users"]Users
-  form.form-inline.pull-md-left.nav-search
-    = form_tag(repositories_path, method: 'GET') do
-      div.input-group
-        input.form-control[name="query" type="text" placeholder="username or repository"]
-        span.input-group-btn
-          button.btn.btn-secondary.nav-search-button[type="submit"]
-            i.fa.fa-search[aria-hidden="true"]
+  div.row
+    div.col-md-2
+      form.form-inline.pull-md-left.input-lg.nav-search
+        = form_tag(repositories_path, method: 'GET', style: 'width: 900px') do
+        div.input-group
+          input.form-control[name="query" type="text" placeholder="username or repository" value=params[:query]]
+          span.input-group-btn
+            button.btn.btn-secondary.nav-search-button[type="submit"]
+              i.fa.fa-search[aria-hidden="true"]
