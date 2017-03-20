@@ -6,5 +6,9 @@ nav.navbar.navbar-light.bg-faded
     li.nav-item
       a.nav-link[href="/users"]Users
   form.form-inline.pull-md-left.nav-search
-    input.form-control[type="text" placeholder="username"]
-    button.btn.btn-outline-success.nav-search-button[type="submit"]Search
+    = form_tag(repositories_path, method: 'GET') do
+      div.input-group
+        input.form-control[name="query" type="text" placeholder="username or repository"]
+        span.input-group-btn
+          button.btn.btn-secondary.nav-search-button[type="submit"]
+            i.fa.fa-search[aria-hidden="true"]
