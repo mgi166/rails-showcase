@@ -5,6 +5,12 @@ nav.navbar.navbar-light.bg-faded
       a.nav-link[href="/repositories"]Repositories
     li.nav-item
       a.nav-link[href="/users"]Users
-  form.form-inline.pull-md-left.nav-search
-    input.form-control[type="text" placeholder="username"]
-    button.btn.btn-outline-success.nav-search-button[type="submit"]Search
+  div.row
+    div.col-md-3
+      = form_tag(repositories_path, method: 'GET') do
+        div.input-group
+          = text_field_tag :repo_or_username, params[:query], placeholder: "username or repository", class: 'form-control'
+          = hidden_field_tag :search, true
+          span.input-group-btn
+            button.btn.btn-secondary.nav-search-button[type="submit"]
+              i.fa.fa-search[aria-hidden="true"]
