@@ -26,5 +26,7 @@ module RailsShowcase
       g.helper false
       g.test_framework :rspec, view_specs: false, helper_specs: false, controller_specs: false
     end
+
+    config.paths.add 'lib/extras', eager_load: true
   end
 end

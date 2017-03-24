@@ -24,7 +24,7 @@ module Github
     rescue Octokit::Error, Bundler::Dsl::DSLError, NoContentGemfile
       false
     rescue => e
-      Rails.logger.info(attributes)
+      RailsShowcase::ExceptionNotifier.notify(e)
       raise e
     end
 
