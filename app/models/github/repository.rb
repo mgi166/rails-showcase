@@ -32,6 +32,10 @@ module Github
       ::Repository.create!(attributes.merge(user: user))
     end
 
+    def build(user)
+      ::Repository.new(attributes.merge(user: user))
+    end
+
     private
 
     def attributes

@@ -41,6 +41,15 @@ RSpec.describe Github::Repository, type: :model do
     end
   end
 
+  describe 'build' do
+    subject { repository.build(user) }
+
+    let(:repository) { Github::Repository.new('user/repo') }
+    let(:user) { create(:user) }
+
+    it { is_expected.to be_instance_of Repository }
+  end
+
   describe '#rails?' do
     subject { repository.rails? }
     let(:repository) { Github::Repository.new('user/repo') }
