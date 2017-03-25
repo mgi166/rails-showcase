@@ -12,19 +12,7 @@ module Github
     end
 
     def each_repo
-      return to_enum unless block_given?
-
-      next_page = true
-      after = ''
-
-      while next_page
-        result = graphql_client.repository_owner(login, repository_opts: { after: after })
-
-        # https://github.com/github/graphql-client/blob/ad6b582e9d57b7c5d8203e69be57c1e808351969/lib/graphql/client/response.rb#L13-L33
-        next unless result.respond_to?(:data)
-
-        data = Hashie::Mash.new(result.data.to_h)
-
+      each_data do |data|
         data.repositoryOwner.repositories.edges.each do |edge|
           node = edge.node
           yield Github::Repository.new(
@@ -35,15 +23,28 @@ module Github
             stargazers_count: node.stargazers.totalCount,
           )
         end
-
-        page_info = data.repositoryOwner.repositories.pageInfo
-
-        after = page_info.endCursor
-        next_page = page_info.hasNextPage
       end
     end
 
     def each_repos
+      each_data do |data|
+        repos = data.repositoryOwner.repositories.edges.map do |edge|
+          node = edge.node
+          Github::Repository.new(
+            "#{login}/#{node.name}",
+            description: node.description,
+            html_url: node.homepageURL,
+            forks_count: node.forks.totalCount,
+            stargazers_count: node.stargazers.totalCount,
+          )
+        end
+        yield repos
+      end
+    end
+
+    private
+
+    def each_data
       return to_enum unless block_given?
 
       next_page = true
@@ -56,22 +57,9 @@ module Github
         next unless result.respond_to?(:data)
 
         data = Hashie::Mash.new(result.data.to_h)
-
-        repos = data.repositoryOwner.repositories.edges.map do |edge|
-          node = edge.node
-          Github::Repository.new(
-            "#{login}/#{node.name}",
-            description: node.description,
-            html_url: node.homepageURL,
-            forks_count: node.forks.totalCount,
-            stargazers_count: node.stargazers.totalCount,
-          )
-        end
-
-        yield repos
+        yield data
 
         page_info = data.repositoryOwner.repositories.pageInfo
-
         after = page_info.endCursor
         next_page = page_info.hasNextPage
       end
