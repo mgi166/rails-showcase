@@ -6,7 +6,7 @@ module Github
 
     def self.each(login, &block)
       return to_enum unless block_given?
-      Github::RepositoryCollection.each_repos(login, &block)
+      Github::RepositoryCollection.each_repo(login, &block)
     end
 
     def initialize(full_name, description: nil, html_url: nil, stargazers_count: nil, forks_count: nil)

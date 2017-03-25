@@ -7,11 +7,11 @@ module Github
       @graphql_client = GraphQLClient.new
     end
 
-    def self.each_repos(login, &block)
-      new(login).each_repos(&block)
+    def self.each_repo(login, &block)
+      new(login).each_repo(&block)
     end
 
-    def each_repos
+    def each_repo
       return to_enum unless block_given?
 
       next_page = true
