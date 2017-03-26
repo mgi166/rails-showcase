@@ -38,7 +38,6 @@ gem 'font-awesome-rails'
 gem 'graphql-client'
 gem 'hashie'
 gem 'kaminari'
-gem 'bootstrap4-kaminari-views'
 
 # https://github.com/twbs/bootstrap-rubygem#a-ruby-on-rails
 source 'https://rails-assets.org' do
