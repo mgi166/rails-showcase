@@ -1,17 +1,20 @@
-= render 'shared/menu'
-div.repos
-  div.repos-table
-    = render 'shared/pagination', resources: @repositories
-    table.table.striped-rows.table-hover
-      thead.thead-inverse
-        tr
-          th #
-          th Name
-          th Star
-      tbody
-        - @repositories.each.with_index(1) do |repo, i|
+div.row
+  = render 'shared/menu'
+div.row
+  div.repos
+    div.repos-table
+      table.table.striped-rows.table-hover
+        thead.thead-inverse
           tr
-            th = ((params[:page] || 1).to_i - 1) * Kaminari.config.default_per_page + i
-            td[class="rails-showcase clickable-row"]: a[href=user_repository_path(repo.user.login, repo.name)] = repo.full_name
-            td: i.fa.fa-star[aria-hidden="true"] = repo.stargazers_count
+            th #
+            th Name
+            th Star
+        tbody
+          - @repositories.each.with_index(1) do |repo, i|
+            tr
+              th = ((params[:page] || 1).to_i - 1) * Kaminari.config.default_per_page + i
+              td[class="rails-showcase clickable-row"]: a[href=user_repository_path(repo.user.login, repo.name)] = repo.full_name
+              td: i.fa.fa-star[aria-hidden="true"] = repo.stargazers_count
+div.row
+  div.col-md-6.push-md-4
     = render 'shared/pagination', resources: @repositories
