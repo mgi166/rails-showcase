@@ -7,11 +7,48 @@ module Github
       @graphql_client = GraphQLClient.new
     end
 
+    def self.each_repo(login, &block)
+      new(login).each_repo(&block)
+    end
+
     def self.each_repos(login, &block)
       new(login).each_repos(&block)
     end
 
+    def each_repo
+      each_data do |data|
+        data.repositoryOwner.repositories.edges.each do |edge|
+          node = edge.node
+          yield Github::Repository.new(
+            "#{login}/#{node.name}",
+            description: node.description,
+            html_url: node.homepageURL,
+            forks_count: node.forks.totalCount,
+            stargazers_count: node.stargazers.totalCount,
+          )
+        end
+      end
+    end
+
     def each_repos
+      each_data do |data|
+        repos = data.repositoryOwner.repositories.edges.map do |edge|
+          node = edge.node
+          Github::Repository.new(
+            "#{login}/#{node.name}",
+            description: node.description,
+            html_url: node.homepageURL,
+            forks_count: node.forks.totalCount,
+            stargazers_count: node.stargazers.totalCount,
+          )
+        end
+        yield repos
+      end
+    end
+
+    private
+
+    def each_data
       return to_enum unless block_given?
 
       next_page = true
@@ -24,21 +61,10 @@ module Github
         next unless result.respond_to?(:data)
 
         data = Hashie::Mash.new(result.data.to_h)
-
-        data.repositoryOwner.repositories.edges.each do |edge|
-          node = edge.node
-          yield Github::Repository.new(
-            "#{login}/#{node.name}",
-            description: node.description,
-            html_url: node.homepageURL,
-            forks_count: node.forks.totalCount,
-            stargazers_count: node.stargazers.totalCount,
-          )
-        end
+        yield data
 
         page_info = data.repositoryOwner.repositories.pageInfo
-
-        after = page_info.endCursor
+        after = %Q("#{page_info.endCursor}")
         next_page = page_info.hasNextPage
       end
     end

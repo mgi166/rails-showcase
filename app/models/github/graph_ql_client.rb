@@ -31,33 +31,83 @@ module Github
       <<~GRAPHQL
         query {
           repositoryOwner(login: "#{owner_name}") {
-            repositories(first: #{first}, after: "#{after}", isFork: false, privacy: PUBLIC) {
-              totalCount
-              pageInfo {
-                endCursor
-                hasNextPage
-                hasPreviousPage
-                startCursor
+            #{repositories_query(first: first, after: after, isFork: false, privacy: 'PUBLIC')}
+          }
+        }
+      GRAPHQL
+    end
+
+    # NOTE: params definition references query > repositoryOwner > repositories.
+    #       https://developer.github.com/early-access/graphql/explorer/
+    #
+    # * first: Int
+    #   * Returns the first n elements from the list.
+    # * after: String
+    #   * Returns the elements in the list that come after the specified global ID.
+    # * last: Int
+    #   * Returns the last n elements from the list.
+    # * before: String
+    #   * Returns the elements in the list that come before the specified global ID.
+    # * privacy: RepositoryPrivacy
+    #   * If non-null, filters repositories according to privacy
+    # * isFork: Boolean
+    #   * If non-null, filters repositories according to whether they are forks of another repository
+    # * orderBy: RepositoryOrder
+    #   * Ordering options for repositories returned from the connection
+    # * affiliation: [RepositoryAffiliation]
+    #   * Affiliation options for repositories returned from the connection
+    # * isLocked: Boolean
+    #   * If non-null, filters repositories according to whether they have been locked
+    def repositories_query(params)
+      args = params
+               .with_indifferent_access
+               .slice(
+                 :first,
+                 :after,
+                 :last,
+                 :before,
+                 :privacy,
+                 :isFork,
+                 :orderBy,
+                 :affiliation,
+                 :isLocked
+               )
+
+      <<~GRAPHQL
+        repositories(#{inspect_args(args)}) {
+          totalCount
+          pageInfo {
+            endCursor
+            hasNextPage
+            hasPreviousPage
+            startCursor
+          }
+          edges {
+            node {
+              name
+              isLocked
+              isMirror
+              description
+              homepageURL
+              forks {
+                totalCount
               }
-              edges {
-                node {
-                  name
-                  isLocked
-                  isMirror
-                  description
-                  homepageURL
-                  forks {
-                    totalCount
-                  }
-                  stargazers {
-                    totalCount
-                  }
-                }
+              stargazers {
+                totalCount
               }
             }
           }
         }
       GRAPHQL
+    end
+
+    private
+
+    def inspect_args(hash)
+      hash.each_with_object([]) do |(k, v), r|
+        next if v.blank?
+        r << "#{k}: #{v}"
+      end.join(', ')
     end
   end
 end

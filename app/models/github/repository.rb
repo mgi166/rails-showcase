@@ -6,6 +6,11 @@ module Github
 
     def self.each(login, &block)
       return to_enum unless block_given?
+      Github::RepositoryCollection.each_repo(login, &block)
+    end
+
+    def self.find_each(login, &block)
+      return to_enum unless block_given?
       Github::RepositoryCollection.each_repos(login, &block)
     end
 
@@ -30,6 +35,10 @@ module Github
 
     def create!(user)
       ::Repository.create!(attributes.merge(user: user))
+    end
+
+    def build(user)
+      ::Repository.new(attributes.merge(user: user))
     end
 
     private
