@@ -60,7 +60,7 @@ module Github
         yield data
 
         page_info = data.repositoryOwner.repositories.pageInfo
-        after = page_info.endCursor
+        after = %Q("#{page_info.endCursor}")
         next_page = page_info.hasNextPage
       end
     end
