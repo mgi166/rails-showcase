@@ -9,6 +9,11 @@ module Github
       Github::RepositoryCollection.each_repo(login, &block)
     end
 
+    def self.find_each(login, &block)
+      return to_enum unless block_given?
+      Github::RepositoryCollection.each_repos(login, &block)
+    end
+
     def initialize(full_name, description: nil, html_url: nil, stargazers_count: nil, forks_count: nil)
       @full_name = full_name
       @name = full_name.to_s.split('/').last
