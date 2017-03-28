@@ -11,6 +11,10 @@ module Github
       new(login).each_repo(&block)
     end
 
+    def self.each_repos(login, &block)
+      new(login).each_repos(&block)
+    end
+
     def each_repo
       each_data do |data|
         data.repositoryOwner.repositories.edges.each do |edge|
