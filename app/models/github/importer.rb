@@ -62,7 +62,7 @@ module Github
     end
 
     def rails_repos(repos, user)
-      Parallel.map(repos, in_threads: 4, progress: "rails_repos") do |repo|
+      Parallel.map(repos) do |repo|
         next unless repo.rails?
         repo.build(user)
       end.compact
