@@ -36,7 +36,11 @@ module Github
       user = Github::User.find_by_username(login)
       user = create_user(user)
       Github::Repository.find_each(user.login) do |repos|
-        ::Repository.import(rails_repos(repos, user))
+        begin
+          ::Repository.import(rails_repos(repos, user))
+        rescue ActiveRecord::RecordNotUnique => e
+          RailsShowcase::ExceptionNotifier.notify(e)
+        end
       end
     end
 
