@@ -32,6 +32,14 @@ module Github
       end
     end
 
+    def bulk_import_repos(login)
+      user = Github::User.find_by_username(login)
+      user = create_user(user)
+      Github::Repository.find_each(user.login) do |repos|
+        ::Repository.import(rails_repos(repos, user))
+      end
+    end
+
     private
 
     def create_resouces!(user, repo)
@@ -51,6 +59,13 @@ module Github
     def create_repo(repo, user)
       repo.create!(user)
     rescue ActiveRecord::RecordNotUnique
+    end
+
+    def rails_repos(repos, user)
+      Parallel.map(repos, in_threads: 4, progress: "rails_repos") do |repo|
+        next unless repo.rails?
+        repo.build(user)
+      end.compact
     end
   end
 end
