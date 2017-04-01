@@ -37,7 +37,22 @@ module Github
       user = create_user(user)
       Github::Repository.find_each(user.login) do |repos|
         begin
-          ::Repository.import(rails_repos(repos, user))
+          options = {
+            on_duplicate_key_update: {
+              conflict_target: [:full_name],
+              columns: [
+                :name,
+                :full_name,
+                :description,
+                :html_url,
+                :stargazers_count,
+                :forks_count
+              ],
+            }
+          }
+
+          results = rails_repos(repos, user)
+          ::Repository.import(results, options) if results.present?
         rescue ActiveRecord::RecordNotUnique => e
           RailsShowcase::ExceptionNotifier.notify(e)
         end
@@ -66,7 +81,7 @@ module Github
     end
 
     def rails_repos(repos, user)
-      Parallel.map(repos) do |repo|
+      Parallel.map(repos, in_threads: 8) do |repo|
         next unless repo.rails?
         repo.build(user)
       end.compact
