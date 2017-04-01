@@ -16,6 +16,14 @@ module Github
       new.find_by_username(username)
     end
 
+    def self.create!(user)
+      ::User.find_or_create_by!(login: user.login) do |u|
+        u.avatar_url = user.avatar_url
+        u.html_url = user.html_url
+      end
+    rescue ActiveRecord::RecordNotUnique
+    end
+
     def initialize
       @client = Octokit::Client.new(access_token: ENV['GITHUB_ACCESS_TOKEN'])
     end

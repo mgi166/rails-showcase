@@ -22,7 +22,7 @@ module Github
 
     def import_user(login)
       user = Github::User.find_by_username(login)
-      create_user(user)
+      Github::User.create!(user)
     end
 
     def import_repos(login)
@@ -34,7 +34,7 @@ module Github
 
     def bulk_import_repos(login)
       user = Github::User.find_by_username(login)
-      user = create_user(user)
+      user = Github::User.create!(user)
       Github::Repository.find_each(user.login) do |repos|
         begin
           options = {
@@ -63,16 +63,8 @@ module Github
 
     def create_resouces!(user, repo)
       return unless repo.rails?
-      u = create_user(user)
+      u = Github::User.create!(user)
       create_repo(repo, u)
-    end
-
-    def create_user(user)
-      ::User.find_or_create_by!(login: user.login) do |u|
-        u.avatar_url = user.avatar_url
-        u.html_url = user.html_url
-      end
-    rescue ActiveRecord::RecordNotUnique
     end
 
     def create_repo(repo, user)
