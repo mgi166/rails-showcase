@@ -33,7 +33,7 @@ module Github
       end
     end
 
-    def bulk_import_repos(login)
+    def import_repos(login)
       user = Github::User.find_or_create_by_username!(login)
       Github::Repository.find_each(user.login) do |repos|
         results = rails_repos(repos, user)
