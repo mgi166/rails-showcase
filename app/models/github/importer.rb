@@ -15,14 +15,14 @@ module Github
     def import_all(since: nil)
       Github::User.each(since: since) do |user|
         Github::Repository.each(user.login) do |repo|
+          next unless repo.rails?
           create_resouces!(user, repo)
         end
       end
     end
 
     def import_user(login)
-      user = Github::User.find_by_username(login)
-      Github::User.find_or_create_by!(user)
+      Github::User.find_or_create_by_username!(login)
     end
 
     def import_repos(login)
@@ -62,12 +62,7 @@ module Github
     private
 
     def create_resouces!(user, repo)
-      return unless repo.rails?
       u = Github::User.find_or_create_by!(user)
-      create_repo(repo, u)
-    end
-
-    def create_repo(repo, user)
       repo.create!(user)
     rescue ActiveRecord::RecordNotUnique
     end
