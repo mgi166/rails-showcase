@@ -39,6 +39,12 @@ module Github
       end
     end
 
+    def import_all(since: nil)
+      Github::User.find_each(since: nil) do |users|
+        results = bulk_import_users(users)
+        bulk_import_resources(
+          ::User.where(id: results.ids)
+        )
       end
     end
 
@@ -49,6 +55,12 @@ module Github
         next unless repo.rails?
         repo.build(user)
       end.compact
+    end
+
+    def bulk_import_resources(users)
+      Parallel.map(users) do |user|
+        bulk_import_repos(user)
+      end
     end
 
     def bulk_import_users(users)
