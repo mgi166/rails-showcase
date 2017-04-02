@@ -24,6 +24,11 @@ module Github
     rescue ActiveRecord::RecordNotUnique
     end
 
+    def self.find_or_create_by!(user)
+      github_user = Github::User.find_by_username(user.login)
+      Github::User.create!(github_user)
+    end
+
     def initialize
       @client = Octokit::Client.new(access_token: ENV['GITHUB_ACCESS_TOKEN'])
     end
