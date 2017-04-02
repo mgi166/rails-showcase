@@ -22,7 +22,7 @@ module Github
 
     def import_user(login)
       user = Github::User.find_by_username(login)
-      Github::User.create!(user)
+      Github::User.find_or_create_by!(user)
     end
 
     def import_repos(login)
@@ -63,7 +63,7 @@ module Github
 
     def create_resouces!(user, repo)
       return unless repo.rails?
-      u = Github::User.create!(user)
+      u = Github::User.find_or_create_by!(user)
       create_repo(repo, u)
     end
 
