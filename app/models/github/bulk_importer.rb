@@ -28,16 +28,17 @@ module Github
 
     def import_users(since: nil)
       Github::User.find_each(since: nil) do |users|
-        values = users.map { |u| u.attrs.slice(*COLUMN_NAMES) }
-        ::User.import(values, USER_IMPORT_OPTIONS)
+        bulk_import_users(users)
       end
     end
 
     def import_repos(login)
       user = Github::User.find_or_create_by_username!(login)
       Github::Repository.find_each(user.login) do |repos|
-        results = rails_repos(repos, user)
-        ::Repository.import(results, REPO_IMPORT_OPTIONS) if results.present?
+        bulk_import_repos(user)
+      end
+    end
+
       end
     end
 
@@ -48,6 +49,18 @@ module Github
         next unless repo.rails?
         repo.build(user)
       end.compact
+    end
+
+    def bulk_import_users(users)
+      values = users.map { |u| u.attrs.slice(*COLUMN_NAMES) }
+      ::User.import(values, USER_IMPORT_OPTIONS)
+    end
+
+    def bulk_import_repos(user)
+      Github::Repository.find_each(user.login) do |repos|
+        results = rails_repos(repos, user)
+        ::Repository.import(results, REPO_IMPORT_OPTIONS) if results.present?
+      end
     end
   end
 end
