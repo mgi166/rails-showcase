@@ -16,17 +16,13 @@ module Github
       new.find_by_username(username)
     end
 
-    def self.create!(user)
-      ::User.find_or_create_by!(login: user.login) do |u|
-        u.avatar_url = user.avatar_url
-        u.html_url = user.html_url
+    def self.find_or_create_by!(user)
+      github_user = find_by_username(user.login)
+      ::User.find_or_create_by!(login: github_user.login) do |u|
+        u.avatar_url = github_user.avatar_url
+        u.html_url = github_user.html_url
       end
     rescue ActiveRecord::RecordNotUnique
-    end
-
-    def self.find_or_create_by!(user)
-      github_user = Github::User.find_by_username(user.login)
-      Github::User.create!(github_user)
     end
 
     def initialize
