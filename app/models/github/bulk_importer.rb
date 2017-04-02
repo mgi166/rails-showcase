@@ -24,7 +24,7 @@ module Github
           :forks_count
         ],
       }
-    }
+    }.freeze
 
     def import_users(since: nil)
       Github::User.find_each(since: nil) do |users|
