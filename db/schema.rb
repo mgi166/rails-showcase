@@ -10,20 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160813142314) do
+ActiveRecord::Schema.define(version: 20170403142122) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "repositories", force: :cascade do |t|
-    t.string  "name",             null: false
-    t.string  "full_name",        null: false
-    t.string  "description"
-    t.string  "html_url"
-    t.integer "stargazers_count"
-    t.integer "forks_count"
-    t.integer "user_id"
+    t.string   "name",             null: false
+    t.string   "full_name",        null: false
+    t.string   "description"
+    t.string   "html_url"
+    t.integer  "stargazers_count"
+    t.integer  "forks_count"
+    t.integer  "user_id"
+    t.datetime "pushed_at"
     t.index ["full_name"], name: "index_repositories_on_full_name", unique: true, using: :btree
+    t.index ["pushed_at"], name: "index_repositories_on_pushed_at", using: :btree
     t.index ["user_id"], name: "index_repositories_on_user_id", using: :btree
   end
 
