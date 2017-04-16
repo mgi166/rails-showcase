@@ -1,4 +1,9 @@
 defaults: &defaults
+  repository:
+    orders:
+      - stargazers_count
+      - forks_count
+      - pushed_at
 
 development:
   <<: *defaults
