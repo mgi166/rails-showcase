@@ -47,7 +47,7 @@ module Github
 
       until (users = client.all_users(since: since)).empty?
         yield users
-        since = user.last.id
+        since = users.last.id
       end
     end
 

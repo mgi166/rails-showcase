@@ -36,7 +36,7 @@ module Github
 
     def create_resouces!(user, repo)
       u = Github::User.find_or_create_by!(user)
-      repo.create!(user)
+      repo.create!(u)
     rescue ActiveRecord::RecordNotUnique
     end
   end

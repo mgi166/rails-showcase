@@ -25,6 +25,7 @@ module Github
             html_url: node.homepageURL,
             forks_count: node.forks.totalCount,
             stargazers_count: node.stargazers.totalCount,
+            pushed_at: node.pushedAt,
           )
         end
       end
@@ -40,6 +41,7 @@ module Github
             html_url: node.homepageURL,
             forks_count: node.forks.totalCount,
             stargazers_count: node.stargazers.totalCount,
+            pushed_at: node.pushedAt,
           )
         end
         yield repos

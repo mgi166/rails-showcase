@@ -21,7 +21,8 @@ module Github
           :description,
           :html_url,
           :stargazers_count,
-          :forks_count
+          :forks_count,
+          :pushed_at,
         ],
       }
     }.freeze
