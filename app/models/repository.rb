@@ -16,11 +16,11 @@ class Repository < ApplicationRecord
   ORDER_BY = %w(stargazers_count forked_count pushed_at)
 
   def self.search(params)
-    if params[:search].present? && params[:repo_or_username].present?
-      Repository.with_like_full_name(params[:repo_or_username]).includes(:user).page(params[:page])
-    else
-      Repository.order_by_stargazers.includes(:user).page(params[:page])
-    end
+    Repository
+      .search_with_full_name(params[:repo_or_username])
+      .search_order_by(params[:order])
+      .includes(:user)
+      .page(params[:page])
   end
 
   private
