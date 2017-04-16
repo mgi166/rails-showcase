@@ -13,7 +13,7 @@ class Repository < ApplicationRecord
     order(arel_table[by].desc)
   }
 
-  ORDER_BY = %w(stargazers_count forked_count pushed_at)
+  ORDER_BY = %w(stargazers_count forks_count pushed_at)
 
   def self.search(params)
     Repository
