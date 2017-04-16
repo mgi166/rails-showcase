@@ -21,7 +21,7 @@ module Github
       @html_url = html_url
       @stargazers_count = stargazers_count
       @forks_count = forks_count
-      @pushed_at = pushed_at
+      @pushed_at = pushed_at && Time.zone.parse(pushed_at)
       @client = Octokit::Client.new(access_token: ENV['GITHUB_ACCESS_TOKEN'])
     end
 
