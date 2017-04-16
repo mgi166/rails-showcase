@@ -1,11 +1,8 @@
 div.menu
   ul.nav.nav-tabs
     li.nav-item
-      a.nav-link.active[href="#" data-toggle="tab"] Recently committed
-/ TODO
-/    li.nav-item
-/      a.nav-link[href="#" data-toggle="tab"] Github stars
-/    li.nav-item
-/      a.nav-link[href="#" data-toggle="tab"] Category
-/    li.nav-item
-/      a.nav-link[href="#" data-toggle="tab"] Rails version
+      a.nav-link.stargazers_count[href="/repositories?order=stargazers_count" data-toggle="tab"] Github stars
+    li.nav-item
+      a.nav-link.forks_count[href="/repositories?order=forks_count" data-toggle="tab" data-turbolinks="false"] Forks count
+    li.nav-item
+      a.nav-link.pushed_at[href="/repositories?order=pushed_at" data-toggle="tab"] Recently committed
