@@ -5,7 +5,9 @@ class Repository < ApplicationRecord
   validates :full_name, presence: true
 
   scope :order_by_stargazers, -> { order('stargazers_count DESC') }
-  scope :search_with_full_name, -> (full_name) { where(arel_table[:full_name].matches("%#{escape_like(full_name)}%")) }
+  scope :search_with_full_name, -> (full_name) {
+    where(arel_table[:full_name].matches("%#{escape_like(full_name)}%")) if full_name.present?
+  }
   scope :search_order_by, -> (order) {
     by = ORDER_BY.include?(order.to_s) ? order.to_s : 'id'
     order(arel_table[by].desc)
