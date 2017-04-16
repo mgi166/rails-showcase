@@ -1,6 +1,6 @@
 module Github
   class Repository
-    attr_reader :name, :full_name, :client, :description, :html_url, :stargazers_count, :forks_count
+    attr_reader :name, :full_name, :client, :description, :html_url, :stargazers_count, :forks_count, :pushed_at
 
     class NoContentGemfile < StandardError; end
 
@@ -14,13 +14,14 @@ module Github
       Github::RepositoryCollection.each_repos(login, &block)
     end
 
-    def initialize(full_name, description: nil, html_url: nil, stargazers_count: nil, forks_count: nil)
+    def initialize(full_name, description: nil, html_url: nil, stargazers_count: nil, forks_count: nil, pushed_at: nil)
       @full_name = full_name
       @name = full_name.to_s.split('/').last
       @description = description
       @html_url = html_url
       @stargazers_count = stargazers_count
       @forks_count = forks_count
+      @pushed_at = pushed_at
       @client = Octokit::Client.new(access_token: ENV['GITHUB_ACCESS_TOKEN'])
     end
 
@@ -51,6 +52,7 @@ module Github
         html_url: html_url,
         stargazers_count: stargazers_count,
         forks_count: forks_count,
+        pushed_at: pushed_at,
       }.stringify_keys
     end
 
