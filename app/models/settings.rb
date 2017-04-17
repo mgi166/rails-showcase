@@ -1,4 +1,4 @@
-class Setting < Settingslogic
+class Settings < Settingslogic
   source "#{Rails.root}/config/settings.yml"
   namespace Rails.env
 end
