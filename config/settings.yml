@@ -1,0 +1,28 @@
+defaults: &defaults
+  repository:
+    orders:
+      - stargazers_count
+      - forks_count
+      - pushed_at
+  bulk_importer:
+    user_columns:
+      - login
+      - avatar_url
+      - html_url
+    repository_columns:
+      - name
+      - full_name
+      - description
+      - html_url
+      - stargazers_count
+      - forks_count
+      - pushed_at
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults

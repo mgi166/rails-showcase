@@ -9,11 +9,9 @@ class Repository < ApplicationRecord
     where(arel_table[:full_name].matches("%#{escape_like(full_name)}%")) if full_name.present?
   }
   scope :search_order_by, -> (order) {
-    by = ORDER_BY.include?(order.to_s) ? order.to_s : 'id'
-    order(arel_table[by].desc)
+    column_name = Settings.repository.orders.include?(order.to_s) ? order.to_s : 'id'
+    order(arel_table[column_name].desc)
   }
-
-  ORDER_BY = %w(stargazers_count forks_count pushed_at)
 
   def self.search(params)
     Repository

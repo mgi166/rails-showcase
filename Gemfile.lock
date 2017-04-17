@@ -194,6 +194,7 @@ GEM
     sawyer (0.7.0)
       addressable (>= 2.3.5, < 2.5)
       faraday (~> 0.8, < 0.10)
+    settingslogic (2.0.9)
     shoulda-matchers (3.1.1)
       activesupport (>= 4.0.0)
     slim (3.0.7)
@@ -268,6 +269,7 @@ DEPENDENCIES
   rails-assets-tether (>= 1.1.0)!
   rspec-rails
   sass-rails (~> 5.0)
+  settingslogic
   shoulda-matchers
   slim-rails
   spring

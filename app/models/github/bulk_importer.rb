@@ -1,31 +1,21 @@
 module Github
   class BulkImporter
-    COLUMN_NAMES = %i(login avatar_url html_url)
-    USER_IMPORT_OPTIONS = {
-      on_duplicate_key_update: {
-        conflict_target: [:login],
-        columns: [
-          :login,
-          :avatar_url,
-          :html_url,
-        ],
-      },
-      validate: false
-    }.freeze
-    REPO_IMPORT_OPTIONS = {
-      on_duplicate_key_update: {
-        conflict_target: [:full_name],
-        columns: [
-          :name,
-          :full_name,
-          :description,
-          :html_url,
-          :stargazers_count,
-          :forks_count,
-          :pushed_at,
-        ],
+    def initialize
+      @import_option_for_user = {
+        on_duplicate_key_update: {
+          conflict_target: [:login],
+          columns: Settings.bulk_importer.user_columns
+        },
+        validate: false
       }
-    }.freeze
+
+      @import_option_for_repo = {
+        on_duplicate_key_update: {
+          conflict_target: [:full_name],
+          columns: Settings.bulk_importer.repository_columns
+        }
+      }
+    end
 
     def import_users(since: nil)
       Github::User.find_each(since: nil) do |users|
@@ -65,14 +55,14 @@ module Github
     end
 
     def bulk_import_users(users)
-      values = users.map { |u| u.attrs.slice(*COLUMN_NAMES) }
-      ::User.import(values, USER_IMPORT_OPTIONS)
+      values = users.map { |u| u.attrs.slice(*Settings.bulk_importer.user_columns) }
+      ::User.import(values, @import_option_for_user)
     end
 
     def bulk_import_repos(user)
       Github::Repository.find_each(user.login) do |repos|
         results = rails_repos(repos, user)
-        ::Repository.import(results, REPO_IMPORT_OPTIONS) if results.present?
+        ::Repository.import(results, @import_option_for_repo) if results.present?
       end
     end
   end
