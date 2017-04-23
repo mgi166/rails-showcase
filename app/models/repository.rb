@@ -13,7 +13,7 @@ class Repository < ApplicationRecord
     order(arel_table[column_name].desc)
   }
 
-  def self.search(params)
+  def self.index(params)
     Repository
       .search_with_full_name(params[:repo_or_username])
       .search_order_by(params[:order])
