@@ -3,7 +3,7 @@ class RepositoriesController < ApplicationController
   before_action :set_repository, only: [:show]
 
   def index
-    @repositories = Repository.search(params)
+    @repositories = Repository.index(params)
   end
 
   def show
