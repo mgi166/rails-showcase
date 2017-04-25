@@ -8,8 +8,8 @@ module Github
       new.each(since: since, &block)
     end
 
-    def self.find_each(since: nil, &block)
-      new.find_each(since: since, &block)
+    def self.find_in_batches(since: nil, &block)
+      new.find_in_batches(since: since, &block)
     end
 
     def self.find_by_username(username)
@@ -42,7 +42,7 @@ module Github
       client.user(username)
     end
 
-    def find_each(since: nil)
+    def find_in_batches(since: nil)
       return to_enum unless block_given?
 
       until (users = client.all_users(since: since)).empty?
