@@ -18,20 +18,20 @@ module Github
     end
 
     def import_users(since: nil)
-      Github::User.find_each(since: nil) do |users|
+      Github::User.find_in_batches(since: nil) do |users|
         bulk_import_users(users)
       end
     end
 
     def import_repos(login)
       user = Github::User.find_or_create_by_username!(login)
-      Github::Repository.find_each(user.login) do |repos|
+      Github::Repository.find_in_batches(user.login) do |repos|
         bulk_import_repos(user)
       end
     end
 
     def import_all(since: nil)
-      Github::User.find_each(since: nil) do |users|
+      Github::User.find_in_batches(since: nil) do |users|
         results = bulk_import_users(users)
         bulk_import_resources(
           ::User.where(id: results.ids)
@@ -60,7 +60,7 @@ module Github
     end
 
     def bulk_import_repos(user)
-      Github::Repository.find_each(user.login) do |repos|
+      Github::Repository.find_in_batches(user.login) do |repos|
         results = rails_repos(repos, user)
         ::Repository.import(results, @import_option_for_repo) if results.present?
       end

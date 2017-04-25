@@ -9,7 +9,7 @@ module Github
       Github::RepositoryCollection.each_repo(login, &block)
     end
 
-    def self.find_each(login, &block)
+    def self.find_in_batches(login, &block)
       return to_enum unless block_given?
       Github::RepositoryCollection.each_repos(login, &block)
     end
