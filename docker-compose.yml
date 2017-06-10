@@ -1,10 +1,14 @@
 version: '3'
 services:
   web:
-    build: .
-    ports: "3000:3000"
-    volumes: .:/app
+    build:
+      context: .
+      dockerfile: Dockerfile
     command: bundle exec rails s -p 3000
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
     links:
       - db
     environment:
