@@ -7,4 +7,5 @@ RUN mkdir /app
 WORKDIR /app
 
 ENV DOCKER=true \
-    BUNDLE_JOBS=4
+    BUNDLE_JOBS=4 \
+    BUNDLE_PATH=/bundle
