@@ -9,7 +9,7 @@ services:
       - "3000:3000"
     volumes:
       - .:/app
-      - bundle:app/vendor/bundle
+      - bundle:/app/vendor/bundle
     links:
       - db
     environment:
