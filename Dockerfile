@@ -6,10 +6,5 @@ RUN apt-get update -qq && \
 RUN mkdir /app
 WORKDIR /app
 
-ADD Gemfile .
-ADD Gemfile.lock .
-
 ENV DOCKER=true \
     BUNDLE_JOBS=4
-
-RUN bundle install
