@@ -9,9 +9,13 @@ services:
       - "3000:3000"
     volumes:
       - .:/app
+      - bundle:app/vendor/bundle
     links:
       - db
     environment:
       DATABASE_URL: postgres://db:5432
   db:
     image: postgres:9.6.3
+
+volumes:
+  bundle:
