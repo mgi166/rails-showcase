@@ -9,6 +9,7 @@ WORKDIR /app
 ADD Gemfile .
 ADD Gemfile.lock .
 
-ENV BUNDLE_JOBS=4
+ENV DOCKER=true \
+    BUNDLE_JOBS=4
 
 RUN bundle install
