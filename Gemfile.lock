@@ -1,9 +1,10 @@
 GIT
-  remote: git://github.com/torbjon/octicons-rails.git
-  revision: cdf8f706f11886cb494e667118170fdef5902896
+  remote: git://github.com/mgi166/octicons-rails.git
+  revision: 964ad7436bcca8fbcb010db645b781821457e0b0
+  branch: change-railties-dependency
   specs:
     octicons-rails (3.5.0)
-      railties (>= 3.2, < 5.1)
+      railties (>= 3.2, < 6.0)
 
 GEM
   remote: https://rubygems.org/
