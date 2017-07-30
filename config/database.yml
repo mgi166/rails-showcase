@@ -24,6 +24,8 @@ default: &default
 docker: &docker
   <<: *default
   host: db
+  user: postgres
+  password: mysecretpassword
 
 development:
   <% if ENV['DOCKER'] %>
