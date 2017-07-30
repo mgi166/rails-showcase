@@ -66,7 +66,11 @@ development:
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
+  <% if ENV['DOCKER'] %>
+  <<: *docker
+  <% else %>
   <<: *default
+  <% end %>
   database: rails-showcase_test
 
 # As with config/secrets.yml, you never want to store sensitive information,
