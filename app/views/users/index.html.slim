@@ -17,6 +17,4 @@ div.row
                 a[href=user_path(user.login)] = user.login
               td = 1
 
-div.row
-  div.col-md-6.push-md-4
-    = render 'shared/pagination', resources: @users
+= render 'shared/pagination', resources: @users
