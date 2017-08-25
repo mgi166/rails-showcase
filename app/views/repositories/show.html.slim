@@ -21,6 +21,10 @@ div.repo.container
     div.row
       p.lead = @repository.description
     div.row
+      div.col-md-4
+        a[href=@repository.html_url]
+          img[src=@repository.thumbnail]
+    div.row
       table.table
         thead.thead-default
           tr
