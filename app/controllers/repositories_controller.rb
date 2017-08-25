@@ -16,6 +16,6 @@ class RepositoriesController < ApplicationController
   end
 
   def set_repository
-    @repository = @user.repositories.find_by!(name: params[:name])
+    @repository = @user.repositories.find_by!(name: params[:name]).decorate
   end
 end
