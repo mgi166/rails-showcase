@@ -127,6 +127,8 @@ GEM
     nio4r (2.1.0)
     nokogiri (1.8.0)
       mini_portile2 (~> 2.2.0)
+    now-ui-kit-rails (0.0.2)
+      sass-rails
     octokit (4.3.0)
       sawyer (~> 0.7.0, >= 0.5.3)
     parallel (1.11.1)
@@ -265,6 +267,7 @@ DEPENDENCIES
   jquery-rails
   kaminari
   listen (~> 3.0.5)
+  now-ui-kit-rails
   octicons-rails!
   octokit
   parallel
@@ -292,4 +295,4 @@ RUBY VERSION
    ruby 2.4.1p111
 
 BUNDLED WITH
-   1.15.3
+   1.15.4
