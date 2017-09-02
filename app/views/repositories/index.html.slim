@@ -16,6 +16,5 @@ div.row
               td[class="rails-showcase clickable-row"]: img.avatar-img-sm[src=repo.user.avatar_url]
                 a[href=user_repository_path(repo.user.login, repo.name)] = repo.full_name
               td: i.fa.fa-star[aria-hidden="true"] = repo.stargazers_count
-div.row
-  div.col-md-6.push-md-4
-    = render 'shared/pagination', resources: @repositories
+
+= render 'shared/pagination', resources: @repositories

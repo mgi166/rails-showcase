@@ -1,6 +1,7 @@
 @import "bootstrap";
 @import "octicons";
 @import "font-awesome";
+@import "now-ui-kit";
 
 img.avatar-img-sm {
     height: 24px;
@@ -28,12 +29,12 @@ img.avatar-img-sm {
     padding-bottom: 12px;
 }
 
-.jumbotron {
+.top-image {
     background: url('/assets/top.jpeg');
-    background-position: center center;
-    background-repeat: no-repeat;
     background-size: cover;
-    color: white;
+    background-repeat: no-repeat;
+    background-position: center center;
+    text-align: center;
 }
 
 td.clickable-row {
@@ -43,4 +44,8 @@ td.clickable-row {
 .fa.disabled {
     opacity: 0.6;
     cursor: not-allowed;
+}
+
+.footer {
+    text-align: center;
 }
