@@ -11,8 +11,8 @@ nav.navbar.navbar-toggleable-md.bg-primary[style="margin: 0;"]
         li.nav-item
           = form_tag(repositories_path, method: 'GET', class: "form-inline") do
             div.input-group
-              = text_field_tag :repo_or_username, params[:query], placeholder: "username or repository", class: 'form-control'
+              = text_field_tag :repo_or_username, params[:query], placeholder: "username or repository", class: 'form-control', style: 'background: white; padding-bottom: 14px;'
               = hidden_field_tag :search, true
-              span.input-group-btn
-                button.btn.btn-secondary.nav-search-button[type="submit"]
-                  i.now-ui-icons.ui-1_settings-gear-63[area-hidden="true"]
+              span.input-group-addon[style="padding: 0;"]
+                button.btn.btn-neutral.btn-round[style="border-top-left-radius: 0px !important; border-bottom-left-radius: 0px !important;"]
+                  i.now-ui-icons.ui-1_zoom-bold[area-hidden="true"]
