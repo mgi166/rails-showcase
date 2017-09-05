@@ -97,6 +97,13 @@ module Github
               stargazers {
                 totalCount
               }
+              repositoryTopics(first: 10) {
+                nodes {
+                  topic {
+                    name
+                  }
+                }
+              }
             }
           }
         }
