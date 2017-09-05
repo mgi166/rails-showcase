@@ -89,6 +89,7 @@ module Github
               isMirror
               description
               homepageUrl
+              createdAt
               pushedAt
               forks {
                 totalCount
