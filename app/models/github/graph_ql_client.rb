@@ -88,7 +88,7 @@ module Github
               isLocked
               isMirror
               description
-              homepageURL
+              homepageUrl
               pushedAt
               forks {
                 totalCount
