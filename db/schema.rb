@@ -10,14 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170905143621) do
+ActiveRecord::Schema.define(version: 20170905144205) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "repositories", id: :serial, force: :cascade do |t|
     t.string "name", null: false
-    t.string "full_name", null: false
     t.string "description"
     t.string "html_url"
     t.integer "stargazers_count"
@@ -30,7 +29,6 @@ ActiveRecord::Schema.define(version: 20170905143621) do
     t.string "topics", default: [], null: false, array: true
     t.string "name_with_owner", null: false
     t.string "url", null: false
-    t.index ["full_name"], name: "index_repositories_on_full_name", unique: true
     t.index ["pushed_at"], name: "index_repositories_on_pushed_at"
     t.index ["user_id"], name: "index_repositories_on_user_id"
   end
