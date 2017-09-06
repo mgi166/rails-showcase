@@ -7,5 +7,6 @@ FactoryGirl.define do
     description "description"
     stargazers_count 20
     forks_count 10
+    repo_created_at Time.current
   end
 end
