@@ -11,7 +11,7 @@ defaults: &defaults
       - html_url
     repository_columns:
       - name
-      - full_name
+      - name_with_owner
       - description
       - html_url
       - stargazers_count

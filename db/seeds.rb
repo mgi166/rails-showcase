@@ -20,7 +20,7 @@ helpyio = User.find_or_create_by!(
 
 Repository.find_or_create_by!(
   name: 'helpy',
-  full_name: 'helpyio/helpy',
+  name_with_owner: 'helpyio/helpy',
   description: 'Helpy is a modern, "mobile-first" helpdesk application built in Ruby. Features include multi-lingual knowledgebase, community discussions and private tickets integrated with email. http://helpy.io/?source=ghh',
   html_url: 'https://github.com/helpyio/helpy',
   stargazers_count: 728,
@@ -30,7 +30,7 @@ Repository.find_or_create_by!(
 
 Repository.find_or_create_by!(
   name: 'gitlabhq',
-  full_name: 'gitlabhq/gitlabhq',
+  name_with_owner: 'gitlabhq/gitlabhq',
   description: 'GitLab is version control for your server | Please open issues in our issue tracker on GitLab.com https://gitlab.com/gitlab-org/gitlab-ce
 ',
   html_url: 'https://github.com/gitlabhq/gitlabhq',

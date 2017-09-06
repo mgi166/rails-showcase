@@ -11,7 +11,7 @@ module Github
 
       @import_option_for_repo = {
         on_duplicate_key_update: {
-          conflict_target: [:full_name],
+          conflict_target: [:name_with_owner],
           columns: Settings.bulk_importer.repository_columns
         }
       }

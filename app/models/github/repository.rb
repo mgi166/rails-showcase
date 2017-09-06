@@ -1,6 +1,6 @@
 module Github
   class Repository
-    attr_reader :name, :full_name, :client, :description, :html_url, :stargazers_count, :forks_count, :pushed_at
+    attr_reader :name, :name_with_owner, :client, :description, :html_url, :stargazers_count, :forks_count, :pushed_at
 
     class NoContentGemfile < StandardError; end
 
@@ -14,9 +14,9 @@ module Github
       Github::RepositoryCollection.each_repos(login, &block)
     end
 
-    def initialize(full_name, description: nil, html_url: nil, stargazers_count: nil, forks_count: nil, pushed_at: nil)
-      @full_name = full_name
-      @name = full_name.to_s.split('/').last
+    def initialize(name_with_owner, description: nil, html_url: nil, stargazers_count: nil, forks_count: nil, pushed_at: nil)
+      @name_with_owner = name_with_owner
+      @name = name_with_owner.to_s.split('/').last
       @description = description
       @html_url = html_url
       @stargazers_count = stargazers_count
@@ -47,7 +47,7 @@ module Github
     def attributes
       {
         name: name,
-        full_name: full_name,
+        name_with_owner: name_with_owner,
         description: description,
         html_url: html_url,
         stargazers_count: stargazers_count,
@@ -60,7 +60,7 @@ module Github
     # @raise [Octokit::RepositoryUnavailable]
     #
     def gemfile_contents
-      content = client.contents(full_name, path: 'Gemfile').content
+      content = client.contents(name_with_owner, path: 'Gemfile').content
       Base64.decode64(content)
     end
 
