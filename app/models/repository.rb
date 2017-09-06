@@ -14,6 +14,8 @@ class Repository < ApplicationRecord
     order(arel_table[column_name].desc)
   }
 
+  before_validation :set_url
+
   def self.index(params)
     Repository
       .search_with_name_with_owner(params[:repo_or_username])
@@ -26,5 +28,9 @@ class Repository < ApplicationRecord
 
   def self.escape_like(str)
     str.gsub(/[\\%_]/) { |match| "\\#{match}" }
+  end
+
+  def set_url
+    self.url = "https://github.com/#{name_with_owner}" if name_with_owner.present?
   end
 end
