@@ -85,6 +85,8 @@ module Github
           edges {
             node {
               name
+              nameWithOwner
+              url
               isLocked
               isMirror
               description
