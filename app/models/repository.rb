@@ -3,6 +3,7 @@ class Repository < ApplicationRecord
 
   validates :name, presence: true
   validates :name_with_owner, presence: true
+  validates :url, presence: true
 
   scope :order_by_stargazers, -> { order('stargazers_count DESC') }
   scope :search_with_name_with_owner, -> (name_with_owner) {

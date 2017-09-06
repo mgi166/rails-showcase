@@ -1,6 +1,6 @@
 module Github
   class Repository
-    attr_reader :name, :name_with_owner, :client, :description, :html_url, :stargazers_count, :forks_count, :pushed_at
+    attr_reader :name, :name_with_owner, :client, :description, :html_url, :url, :stargazers_count, :forks_count, :pushed_at
 
     class NoContentGemfile < StandardError; end
 
@@ -14,11 +14,12 @@ module Github
       Github::RepositoryCollection.each_repos(login, &block)
     end
 
-    def initialize(name_with_owner, description: nil, html_url: nil, stargazers_count: nil, forks_count: nil, pushed_at: nil)
+    def initialize(name_with_owner, description: nil, html_url: nil, url: nil, stargazers_count: nil, forks_count: nil, pushed_at: nil)
       @name_with_owner = name_with_owner
       @name = name_with_owner.to_s.split('/').last
       @description = description
       @html_url = html_url
+      @url = url || "https://github.com/#{@name_with_owner}"
       @stargazers_count = stargazers_count
       @forks_count = forks_count
       @pushed_at = pushed_at && Time.zone.parse(pushed_at)
@@ -50,6 +51,7 @@ module Github
         name_with_owner: name_with_owner,
         description: description,
         html_url: html_url,
+        url: url,
         stargazers_count: stargazers_count,
         forks_count: forks_count,
         pushed_at: pushed_at,
