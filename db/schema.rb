@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 20170905144433) do
     t.datetime "pushed_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "repo_created_at", null: false
+    t.datetime "repo_created_at"
     t.string "topics", default: [], null: false, array: true
     t.string "name_with_owner", null: false
     t.string "url", null: false
