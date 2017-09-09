@@ -46,8 +46,6 @@ module Github
       ::Repository.new(attributes.merge(user: user))
     end
 
-    private
-
     def attributes
       {
         name: name,
@@ -62,6 +60,8 @@ module Github
         topics: topics,
       }.stringify_keys
     end
+
+    private
 
     # @raise [Octokit::NotFound] If `Gemfile` does not exist in repository, raise Octokit::NotFound
     # @raise [Octokit::RepositoryUnavailable]
