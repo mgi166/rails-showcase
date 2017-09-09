@@ -63,7 +63,14 @@ module Github
     def bulk_import_repos(user)
       Github::Repository.find_in_batches(user.login) do |repos|
         results = rails_repos(repos, user)
-        ::Repository.import(results, @import_option_for_repo) if results.present?
+        next if results.blank?
+
+        ApplicationRecord.transaction do
+          user_attrs = user.attrs.slice(*Settings.bulk_importer.user_columns.map(&:to_sym))
+          res = ::User.import([user_attrs], @import_option_for_user)
+          results.map! { |r| r.merge(user_id: res.ids.first) }
+          ::Repository.import(results, @import_option_for_repo)
+        end
       end
     end
   end
