@@ -49,9 +49,10 @@ module Github
     end
 
     def bulk_import_resources(users)
-      Parallel.map(users) do |user|
+      Parallel.each(users) do |user|
         bulk_import_repos(user)
       end
+      ApplicationRecord.connection.reconnect!
     end
 
     def bulk_import_users(users)
