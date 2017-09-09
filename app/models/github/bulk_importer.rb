@@ -44,7 +44,7 @@ module Github
     def rails_repos(repos, user)
       Parallel.map(repos, in_threads: 8) do |repo|
         next unless repo.rails?
-        repo.build(user)
+        repo.attributes
       end.compact
     end
 
