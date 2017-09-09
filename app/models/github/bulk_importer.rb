@@ -25,17 +25,12 @@ module Github
 
     def import_repos(login)
       user = Github::User.find_or_create_by_username!(login)
-      Github::Repository.find_in_batches(user.login) do |repos|
-        bulk_import_repos(user)
-      end
+      bulk_import_repos(user)
     end
 
     def import_all(since: nil)
       Github::User.find_in_batches(since: nil) do |users|
-        results = bulk_import_users(users)
-        bulk_import_resources(
-          ::User.where(id: results.ids)
-        )
+        bulk_import_resources(users)
       end
     end
 
@@ -56,7 +51,11 @@ module Github
     end
 
     def bulk_import_users(users)
-      values = users.map { |u| u.attrs.slice(*Settings.bulk_importer.user_columns) }
+      values = users.map do |u|
+        u.attrs.slice(
+          *Settings.bulk_importer.user_columns.map(&:to_sym)
+        )
+      end
       ::User.import(values, @import_option_for_user)
     end
 
