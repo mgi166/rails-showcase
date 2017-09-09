@@ -17,7 +17,7 @@ module Github
     end
 
     def self.find_or_create_by_username!(username)
-      ::User.find_or_create_by!(login: user.login) do |u|
+      ::User.find_or_create_by!(login: username) do |u|
         github_user = find_by_username(username)
         u.avatar_url = github_user.avatar_url
         u.html_url = github_user.html_url
