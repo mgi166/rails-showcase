@@ -45,7 +45,7 @@ module Github
         topics: node.repositoryTopics.nodes.map(&:name),
         forks_count: node.forks.totalCount,
         stargazers_count: node.stargazers.totalCount,
-        repo_created_at: createdAt,
+        repo_created_at: node.createdAt,
         pushed_at: node.pushedAt,
       )
     end
