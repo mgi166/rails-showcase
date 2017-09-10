@@ -30,7 +30,11 @@ module Github
 
     def import_all(since: nil)
       Github::User.find_in_batches(since: nil) do |users|
-        bulk_import_resources(users)
+        begin
+          bulk_import_resources(users)
+        rescue => ex
+          RailsShowcase::ExceptionNotifier.notify(ex)
+        end
       end
     end
 
