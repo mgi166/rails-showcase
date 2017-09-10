@@ -8,8 +8,8 @@ RSpec.describe Repository, type: :model do
       it { is_expected.to validate_presence_of :name }
     end
 
-    describe '#full_name' do
-      it { is_expected.to validate_presence_of :full_name }
+    describe '#name_with_owner' do
+      it { is_expected.to validate_presence_of :name_with_owner }
     end
 
     describe 'belongs_to :user' do
@@ -20,10 +20,10 @@ RSpec.describe Repository, type: :model do
   describe '.index' do
     subject { Repository.index(params).to_a }
 
-    let!(:repo_1) { create(:repository, full_name: 'abc/def', stargazers_count: 1, forks_count: 4, pushed_at: 1.second.ago) }
-    let!(:repo_2) { create(:repository, full_name: 'xyz/xyz', stargazers_count: 3, forks_count: 2, pushed_at: 3.second.ago) }
-    let!(:repo_3) { create(:repository, full_name: 'bcd/abc', stargazers_count: 2, forks_count: 1, pushed_at: 4.second.ago) }
-    let!(:repo_4) { create(:repository, full_name: 'efg/hij', stargazers_count: 4, forks_count: 3, pushed_at: 2.second.ago) }
+    let!(:repo_1) { create(:repository, name_with_owner: 'abc/def', stargazers_count: 1, forks_count: 4, pushed_at: 1.second.ago) }
+    let!(:repo_2) { create(:repository, name_with_owner: 'xyz/xyz', stargazers_count: 3, forks_count: 2, pushed_at: 3.second.ago) }
+    let!(:repo_3) { create(:repository, name_with_owner: 'bcd/abc', stargazers_count: 2, forks_count: 1, pushed_at: 4.second.ago) }
+    let!(:repo_4) { create(:repository, name_with_owner: 'efg/hij', stargazers_count: 4, forks_count: 3, pushed_at: 2.second.ago) }
 
     context 'with no params' do
       let(:params) { {} }
@@ -42,7 +42,7 @@ RSpec.describe Repository, type: :model do
     context 'with `repo_or_username`' do
       let(:params) { { repo_or_username: 'abc' } }
 
-      it 'returns repositories with full_name' do
+      it 'returns repositories with name_with_owner' do
         expected_repos =  [
           repo_3,
           repo_1,

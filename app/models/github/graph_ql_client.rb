@@ -85,16 +85,26 @@ module Github
           edges {
             node {
               name
+              nameWithOwner
+              url
               isLocked
               isMirror
               description
-              homepageURL
+              homepageUrl
+              createdAt
               pushedAt
               forks {
                 totalCount
               }
               stargazers {
                 totalCount
+              }
+              repositoryTopics(first: 10) {
+                nodes {
+                  topic {
+                    name
+                  }
+                }
               }
             }
           }

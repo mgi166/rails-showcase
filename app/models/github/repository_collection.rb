@@ -19,14 +19,7 @@ module Github
       each_data do |data|
         data.repositoryOwner.repositories.edges.each do |edge|
           node = edge.node
-          yield Github::Repository.new(
-            "#{login}/#{node.name}",
-            description: node.description,
-            html_url: node.homepageURL,
-            forks_count: node.forks.totalCount,
-            stargazers_count: node.stargazers.totalCount,
-            pushed_at: node.pushedAt,
-          )
+          yield github_repository(node)
         end
       end
     end
@@ -35,20 +28,27 @@ module Github
       each_data do |data|
         repos = data.repositoryOwner.repositories.edges.map do |edge|
           node = edge.node
-          Github::Repository.new(
-            "#{login}/#{node.name}",
-            description: node.description,
-            html_url: node.homepageURL,
-            forks_count: node.forks.totalCount,
-            stargazers_count: node.stargazers.totalCount,
-            pushed_at: node.pushedAt,
-          )
+          github_repository(node)
         end
         yield repos
       end
     end
 
     private
+
+    def github_repository(node)
+      Github::Repository.new(
+        "#{login}/#{node.name}",
+        description: node.description,
+        html_url: node.homepageUrl,
+        url: node.url,
+        topics: node.repositoryTopics.nodes.map(&:name),
+        forks_count: node.forks.totalCount,
+        stargazers_count: node.stargazers.totalCount,
+        repo_created_at: node.createdAt,
+        pushed_at: node.pushedAt,
+      )
+    end
 
     def each_data
       return to_enum unless block_given?
