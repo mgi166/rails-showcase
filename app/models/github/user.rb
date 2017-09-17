@@ -5,8 +5,8 @@ module Github
     include Enumerable
 
     class << self
-      def each(since: nil, &block)
-        new.each(since: since, &block)
+      def each(options = {}, &block)
+        new.each(options, &block)
       end
 
       def find_in_batches(since: nil, &block)
