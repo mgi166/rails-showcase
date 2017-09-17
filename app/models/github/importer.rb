@@ -32,6 +32,9 @@ module Github
           ::Repository.import(results, @import_option_for_repo)
         end
       end
+    rescue => e
+      RailsShowcase::ExceptionNotifier.notify(e)
+      raise e
     end
 
     private
