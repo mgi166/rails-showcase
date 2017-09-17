@@ -5,8 +5,7 @@ module Github
         on_duplicate_key_update: {
           conflict_target: [:login],
           columns: Settings.bulk_importer.user_columns
-        },
-        validate: false
+        }
       }
 
       @import_option_for_repo = {
