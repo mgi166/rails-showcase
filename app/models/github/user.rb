@@ -9,10 +9,6 @@ module Github
         new.each(options, &block)
       end
 
-      def find_in_batches(since: nil, &block)
-        new.find_in_batches(since: since, &block)
-      end
-
       def find_by_username(username)
         new.find_by_username(username)
       end
@@ -42,15 +38,6 @@ module Github
 
     def find_by_username(username)
       client.user(username)
-    end
-
-    def find_in_batches(since: nil)
-      return to_enum unless block_given?
-
-      until (users = github_users(since: since)).empty?
-        yield users
-        since = users.last.id
-      end
     end
 
     # @param options [Hash] Sort and pagination options
