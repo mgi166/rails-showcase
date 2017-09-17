@@ -4,34 +4,36 @@ module Github
 
     include Enumerable
 
-    def self.each(since: nil, &block)
-      new.each(since: since, &block)
-    end
-
-    def self.find_in_batches(since: nil, &block)
-      new.find_in_batches(since: since, &block)
-    end
-
-    def self.find_by_username(username)
-      new.find_by_username(username)
-    end
-
-    def self.find_or_create_by_username!(username)
-      ::User.find_or_create_by!(login: username) do |u|
-        github_user = find_by_username(username)
-        u.avatar_url = github_user.avatar_url
-        u.html_url = github_user.html_url
+    class << self
+      def each(since: nil, &block)
+        new.each(since: since, &block)
       end
-    rescue ActiveRecord::RecordNotUnique
-    end
 
-    def self.find_or_create_by!(user)
-      ::User.find_or_create_by!(login: user.login) do |u|
-        github_user = find_by_username(user.login)
-        u.avatar_url = github_user.avatar_url
-        u.html_url = github_user.html_url
+      def find_in_batches(since: nil, &block)
+        new.find_in_batches(since: since, &block)
       end
-    rescue ActiveRecord::RecordNotUnique
+
+      def find_by_username(username)
+        new.find_by_username(username)
+      end
+
+      def find_or_create_by_username!(username)
+        ::User.find_or_create_by!(login: username) do |u|
+          github_user = find_by_username(username)
+          u.avatar_url = github_user.avatar_url
+          u.html_url = github_user.html_url
+        end
+      rescue ActiveRecord::RecordNotUnique
+      end
+
+      def find_or_create_by!(user)
+        ::User.find_or_create_by!(login: user.login) do |u|
+          github_user = find_by_username(user.login)
+          u.avatar_url = github_user.avatar_url
+          u.html_url = github_user.html_url
+        end
+      rescue ActiveRecord::RecordNotUnique
+      end
     end
 
     def initialize
