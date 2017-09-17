@@ -4,34 +4,14 @@ module Github
 
     include Enumerable
 
-    def self.each(since: nil, &block)
-      new.each(since: since, &block)
-    end
-
-    def self.find_in_batches(since: nil, &block)
-      new.find_in_batches(since: since, &block)
-    end
-
-    def self.find_by_username(username)
-      new.find_by_username(username)
-    end
-
-    def self.find_or_create_by_username!(username)
-      ::User.find_or_create_by!(login: username) do |u|
-        github_user = find_by_username(username)
-        u.avatar_url = github_user.avatar_url
-        u.html_url = github_user.html_url
+    class << self
+      def each(options = {}, &block)
+        new.each(options, &block)
       end
-    rescue ActiveRecord::RecordNotUnique
-    end
 
-    def self.find_or_create_by!(user)
-      ::User.find_or_create_by!(login: user.login) do |u|
-        github_user = find_by_username(user.login)
-        u.avatar_url = github_user.avatar_url
-        u.html_url = github_user.html_url
+      def find_by_username(username)
+        new.find_by_username(username)
       end
-    rescue ActiveRecord::RecordNotUnique
     end
 
     def initialize
@@ -42,24 +22,40 @@ module Github
       client.user(username)
     end
 
-    def find_in_batches(since: nil)
+    # @param options [Hash] Sort and pagination options
+    # @option options [String] :sort Sort field
+    # @option options [String] :order Sort order (asc or desc)
+    # @option options [Integer] :page Page of paginated results
+    # @option options [Integer] :per_page Number of items per page
+    # @return [Sawyer::Resource] Search results object
+    # @see https://developer.github.com/v3/search/#search-users
+    #
+    def each(options = {})
       return to_enum unless block_given?
 
-      until (users = client.all_users(since: since)).empty?
-        yield users
-        since = users.last.id
+      # NOTE: GitHub Search api only provides up to 1,000 result.
+      #       https://developer.github.com/v3/search/#about-the-search-api
+      per_page = options[:per_page].presence || 100
+      max_page = (1000 % per_page).zero? ? 1000 / per_page : 1000 / per_page + 1
+      (1..max_page).each do |n|
+        github_users(options.merge(page: n)).items.each do |user|
+          yield user
+        end
       end
     end
 
-    def each(since: nil)
-      return to_enum unless block_given?
+    private
 
-      until (users = client.all_users(since: since)).empty?
-        users.each do |user|
-          yield user
-        end
-        since = users.last.id
-      end
+    def github_users(options = {})
+      client.search_users(
+        "repos:>1 language:ruby",
+        options.reverse_merge(
+          sort: :joined,
+          order: :asc,
+          per_page: 100,
+          page: 1,
+        )
+      )
     end
   end
 end

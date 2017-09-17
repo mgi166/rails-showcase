@@ -23,11 +23,6 @@ module Github
       end
     end
 
-    def import_repos(login)
-      user = Github::User.find_or_create_by_username!(login)
-      bulk_import_repos(user)
-    end
-
     def import_all(since: nil)
       Github::User.find_in_batches(since: nil) do |users|
         begin

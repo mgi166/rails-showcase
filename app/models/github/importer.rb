@@ -21,10 +21,6 @@ module Github
       end
     end
 
-    def import_user(login)
-      Github::User.find_or_create_by_username!(login)
-    end
-
     def import_repos(login)
       user = Github::User.find_by_username(login)
       Github::Repository.each(user.login) do |repo|
