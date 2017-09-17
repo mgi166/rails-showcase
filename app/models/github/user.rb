@@ -61,10 +61,10 @@ module Github
 
     private
 
-    def github_users(params = {})
+    def github_users(options = {})
       client.search_users(
         "repos:>1 language:ruby",
-        params.reverse_merge(
+        options.reverse_merge(
           sort: :joined,
           order: :asc,
           per_page: 100,
