@@ -19,14 +19,16 @@ module Github
     def import!(login)
       ApplicationRecord.transaction do
         user = Github::User.find_by_username(login)
+        user_id = user.id
+
+        user_attrs = user.attrs.slice(*Settings.bulk_importer.user_columns.map(&:to_sym))
+        res = ::User.import([user_attrs], @import_option_for_user)
 
         Github::Repository.find_in_batches(user.login) do |repos|
           results = rails_repos(repos)
           next if results.blank?
 
-          user_attrs = user.attrs.slice(*Settings.bulk_importer.user_columns.map(&:to_sym))
-          res = ::User.import([user_attrs], @import_option_for_user)
-          results.map! { |r| r.merge(user_id: res.ids.first) }
+          results.map! { |r| r.merge(user_id: user_id) }
           ::Repository.import(results, @import_option_for_repo)
         end
       end
