@@ -51,11 +51,14 @@ module Github
     def each(options = {})
       return to_enum unless block_given?
 
-      until (users = github_users(options)).empty?
-        users.each do |user|
+      # NOTE: GitHub Search api only provides up to 1,000 result.
+      #       https://developer.github.com/v3/search/#about-the-search-api
+      per_page = options[:per_page].presence || 100
+      max_page = (1000 % per_page).zero? ? 1000 / per_page : 1000 / per_page + 1
+      (1..max_page).each do |n|
+        github_users(options.merge(page: n)).items.each do |user|
           yield user
         end
-        since = users.last.id
       end
     end
 
