@@ -47,7 +47,7 @@ module Github
     def find_in_batches(since: nil)
       return to_enum unless block_given?
 
-      until (users = client.all_users(since: since)).empty?
+      until (users = github_users(since: since)).empty?
         yield users
         since = users.last.id
       end
@@ -56,12 +56,18 @@ module Github
     def each(since: nil)
       return to_enum unless block_given?
 
-      until (users = client.all_users(since: since)).empty?
+      until (users = github_users(since: since)).empty?
         users.each do |user|
           yield user
         end
         since = users.last.id
       end
+    end
+
+    private
+
+    def github_users(params = {})
+      client.all_users(params)
     end
   end
 end
