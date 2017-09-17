@@ -53,10 +53,18 @@ module Github
       end
     end
 
-    def each(since: nil)
+    # @param options [Hash] Sort and pagination options
+    # @option options [String] :sort Sort field
+    # @option options [String] :order Sort order (asc or desc)
+    # @option options [Integer] :page Page of paginated results
+    # @option options [Integer] :per_page Number of items per page
+    # @return [Sawyer::Resource] Search results object
+    # @see https://developer.github.com/v3/search/#search-users
+    #
+    def each(options = {})
       return to_enum unless block_given?
 
-      until (users = github_users(since: since)).empty?
+      until (users = github_users(options)).empty?
         users.each do |user|
           yield user
         end
@@ -67,7 +75,15 @@ module Github
     private
 
     def github_users(params = {})
-      client.all_users(params)
+      client.search_users(
+        "repos:>1 language:ruby",
+        params.reverse_merge(
+          sort: :joined,
+          order: :asc,
+          per_page: 100,
+          page: 1,
+        )
+      )
     end
   end
 end
