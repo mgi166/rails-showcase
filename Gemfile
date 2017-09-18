@@ -43,6 +43,8 @@ gem 'settingslogic'
 gem 'draper'
 gem 'now-ui-kit-rails'
 gem 'sidekiq'
+gem 'hiredis', require: ["redis", "redis/connection/hiredis"]
+gem 'redis'
 
 # https://github.com/twbs/bootstrap-rubygem#a-ruby-on-rails
 source 'https://rails-assets.org' do
