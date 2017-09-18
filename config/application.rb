@@ -21,5 +21,6 @@ module RailsShowcase
     end
 
     config.paths.add 'lib/extras', eager_load: true
+    config.active_job.queue_adapter = :sidekiq
   end
 end
