@@ -19,6 +19,9 @@ defaults: &defaults
       - pushed_at
   redis:
     url: redis://localhost:6379/1
+  sidekiq:
+    client_size: 2
+    server_size: 2
 
 development:
   <<: *defaults
