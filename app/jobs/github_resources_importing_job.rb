@@ -20,10 +20,9 @@ class GithubResourcesImportingJob < ApplicationJob
   def perform(login)
     ApplicationRecord.transaction do
       user = Github::User.find_by_username(login)
-      user_id = user.id
-
       user_attrs = user.attrs.slice(*Settings.bulk_importer.user_columns.map(&:to_sym))
       res = ::User.import([user_attrs], @import_option_for_user)
+      user_id = res.ids.first
 
       Github::Repository.find_in_batches(user.login) do |repos|
         results = rails_repos(repos)
