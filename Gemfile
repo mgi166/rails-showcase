@@ -42,6 +42,7 @@ gem 'activerecord-import'
 gem 'settingslogic'
 gem 'draper'
 gem 'now-ui-kit-rails'
+gem 'sidekiq'
 
 # https://github.com/twbs/bootstrap-rubygem#a-ruby-on-rails
 source 'https://rails-assets.org' do
