@@ -1,7 +1,9 @@
 class GithubResourcesImportingJob < ApplicationJob
   queue_as :default
 
-  def initialize
+  def initialize(*args)
+    super
+
     @import_option_for_user = {
       on_duplicate_key_update: {
         conflict_target: [:login],
