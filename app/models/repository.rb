@@ -11,7 +11,7 @@ class Repository < ApplicationRecord
   }
   scope :search_order_by, -> (order) {
     column_name = ::Settings.repository.orders.include?(order.to_s) ? order.to_s : 'stargazers_count'
-    order(arel_table[column_name].desc)
+    order(column_name => :desc)
   }
 
   before_validation :set_url
