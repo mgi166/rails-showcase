@@ -9,6 +9,7 @@ div.row
             th #
             th Name
             th Star
+            th Last imported at
         tbody
           - @repositories.each.with_index(1) do |repo, i|
             tr
@@ -16,5 +17,5 @@ div.row
               td[class="rails-showcase clickable-row"]: img.avatar-img-sm[src=repo.user.avatar_url]
                 a[href=user_repository_path(repo.user.login, repo.name)] = repo.name_with_owner
               td: i.fa.fa-star[aria-hidden="true"] = repo.stargazers_count
-
+              td = l repo.updated_at, format: "%Y/%m/%d"
 = render 'shared/pagination', resources: @repositories
