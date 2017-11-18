@@ -1,0 +1,7 @@
+concurrency: 2
+pidfile: tmp/pids/sidekiq.pid
+
+development:
+  concurrency: 10
+production:
+  concurrency: 10

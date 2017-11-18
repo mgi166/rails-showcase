@@ -42,6 +42,10 @@ gem 'activerecord-import'
 gem 'settingslogic'
 gem 'draper'
 gem 'now-ui-kit-rails'
+gem 'sidekiq'
+gem 'hiredis', require: ["redis", "redis/connection/hiredis"]
+gem 'redis'
+gem 'redis-namespace'
 
 # https://github.com/twbs/bootstrap-rubygem#a-ruby-on-rails
 source 'https://rails-assets.org' do
