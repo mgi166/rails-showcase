@@ -5,7 +5,7 @@ class Repository < ApplicationRecord
   validates :name_with_owner, presence: true
   validates :url, presence: true
 
-  scope :order_by_stargazers, -> { order('stargazers_count DESC') }
+  scope :order_by_stargazers, -> { order(stargazers_count: :desc) }
   scope :search_with_name_with_owner, -> (name_with_owner) {
     where(arel_table[:name_with_owner].matches("%#{escape_like(name_with_owner)}%")) if name_with_owner.present?
   }
