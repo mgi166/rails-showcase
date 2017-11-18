@@ -1,8 +1,8 @@
-:concurrency: 10
+:concurrency: 5
 :pidfile: tmp/pids/sidekiq.pid
 :logfile: log/sidekiq.log
 
 development:
-  concurrency: 10
+  concurrency: 5
 production:
-  concurrency: 10
+  concurrency: 5
