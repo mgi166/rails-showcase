@@ -9,5 +9,12 @@ namespace :github do
     task :users, [:since] => :environment do |task, args|
       Github::BulkImporter.new.import_all(since: args.since)
     end
+
+    desc 'Import resources from GitHub'
+    task resources: :environments do |task, args|
+      Github::User.each do |user|
+        GithubResourcesImportingJob.perform_later(user.login)
+      end
+    end
   end
 end
