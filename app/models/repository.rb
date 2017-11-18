@@ -10,7 +10,7 @@ class Repository < ApplicationRecord
     where(arel_table[:name_with_owner].matches("%#{escape_like(name_with_owner)}%")) if name_with_owner.present?
   }
   scope :search_order_by, -> (order) {
-    column_name = ::Settings.repository.orders.include?(order.to_s) ? order.to_s : 'id'
+    column_name = ::Settings.repository.orders.include?(order.to_s) ? order.to_s : 'stargazers_count'
     order(arel_table[column_name].desc)
   }
 
