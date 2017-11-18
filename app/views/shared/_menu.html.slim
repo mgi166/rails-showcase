@@ -1,8 +1,11 @@
 div.menu
   ul.nav.nav-tabs
     li.nav-item
-      a.nav-link.stargazers_count[href="/repositories?order=stargazers_count" data-toggle="tab"] Github stars
+      - activated = tab_activated?('stargazers_count')
+      = link_to 'Github stars', repositories_path(order: :stargazers_count), data: { toggle: :tab }, class: activated ? 'nav-link active' : 'nav-link'
     li.nav-item
-      a.nav-link.forks_count[href="/repositories?order=forks_count" data-toggle="tab" data-turbolinks="false"] Forks count
+      - activated = tab_activated?('forks_count')
+      = link_to 'Forks count', repositories_path(order: :forks_count), data: { toggle: :tab }, class: activated ? 'nav-link active' : 'nav-link'
     li.nav-item
-      a.nav-link.pushed_at[href="/repositories?order=pushed_at" data-toggle="tab"] Recently committed
+      - activated = tab_activated?('pushed_at')
+      = link_to 'Recently committed', repositories_path(order: :pushed_at), data: { toggle: :tab }, class: activated ? 'nav-link active' : 'nav-link'
