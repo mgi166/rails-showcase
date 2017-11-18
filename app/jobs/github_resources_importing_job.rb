@@ -1,6 +1,10 @@
 class GithubResourcesImportingJob < ApplicationJob
   queue_as :default
 
+  rescue_from Octokit::TooManyRequests do |e|
+    retry_job wait: 1.hour
+  end
+
   def initialize(*args)
     super
 
