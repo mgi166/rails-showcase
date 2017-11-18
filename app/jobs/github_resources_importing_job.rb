@@ -20,18 +20,20 @@ class GithubResourcesImportingJob < ApplicationJob
   end
 
   def perform(login)
-    ApplicationRecord.transaction do
-      user = Github::User.find_by_username(login)
-      user_attrs = user.attrs.slice(*Settings.bulk_importer.user_columns.map(&:to_sym))
-      res = ::User.import([user_attrs], @import_option_for_user)
-      user_id = res.ids.first
+    ApplicationRecord.connection_pool.with_connection do
+      ApplicationRecord.transaction do
+        user = Github::User.find_by_username(login)
+        user_attrs = user.attrs.slice(*Settings.bulk_importer.user_columns.map(&:to_sym))
+        res = ::User.import([user_attrs], @import_option_for_user)
+        user_id = res.ids.first
 
-      Github::Repository.find_in_batches(user.login) do |repos|
-        results = rails_repos(repos)
-        next if results.blank?
+        Github::Repository.find_in_batches(user.login) do |repos|
+          results = rails_repos(repos)
+          next if results.blank?
 
-        results.map! { |r| r.merge(user_id: user_id) }
-        ::Repository.import(results, @import_option_for_repo)
+          results.map! { |r| r.merge(user_id: user_id) }
+          ::Repository.import(results, @import_option_for_repo)
+        end
       end
     end
   rescue => e
