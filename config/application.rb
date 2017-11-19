@@ -20,6 +20,14 @@ module RailsShowcase
       g.test_framework :rspec, view_specs: false, helper_specs: false, controller_specs: false
     end
 
+    initializer :override_secrets do
+      require 'yaml_vault/rails'
+      YamlVault::Rails.override_secrets(
+        Settings.yaml_vault.key,
+        Settings.yaml_vault.cryptor,
+      )
+    end
+
     config.paths.add 'lib/extras', eager_load: true
     config.active_job.queue_adapter = :sidekiq
   end
