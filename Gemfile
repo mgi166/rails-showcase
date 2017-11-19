@@ -46,6 +46,7 @@ gem 'sidekiq'
 gem 'hiredis', require: ["redis", "redis/connection/hiredis"]
 gem 'redis'
 gem 'redis-namespace'
+gem 'yaml_vault'
 
 # https://github.com/twbs/bootstrap-rubygem#a-ruby-on-rails
 source 'https://rails-assets.org' do

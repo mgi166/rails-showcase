@@ -266,6 +266,9 @@ GEM
     websocket-driver (0.6.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
+    yaml_vault (1.0.1)
+      activesupport (>= 4)
+      thor
 
 PLATFORMS
   ruby
@@ -310,6 +313,7 @@ DEPENDENCIES
   uglifier (>= 1.3.0)
   web-console
   webmock
+  yaml_vault
 
 RUBY VERSION
    ruby 2.4.1p111
