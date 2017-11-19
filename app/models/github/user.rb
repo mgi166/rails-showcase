@@ -31,7 +31,7 @@ module Github
     # @see https://developer.github.com/v3/search/#search-users
     #
     def each(options = {})
-      return to_enum unless block_given?
+      return lazy unless block_given?
 
       # NOTE: GitHub Search api only provides up to 1,000 result.
       #       https://developer.github.com/v3/search/#about-the-search-api
