@@ -29,6 +29,7 @@ gem 'turbolinks', '~> 5'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+gem 'aws-sdk', '~> 3'
 gem 'octokit'
 gem 'slim-rails'
 gem 'bootstrap'
@@ -46,6 +47,7 @@ gem 'sidekiq'
 gem 'hiredis', require: ["redis", "redis/connection/hiredis"]
 gem 'redis'
 gem 'redis-namespace'
+gem 'yaml_vault'
 
 # https://github.com/twbs/bootstrap-rubygem#a-ruby-on-rails
 source 'https://rails-assets.org' do
