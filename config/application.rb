@@ -20,12 +20,13 @@ module RailsShowcase
       g.test_framework :rspec, view_specs: false, helper_specs: false, controller_specs: false
     end
 
-    initializer :override_secrets do
+    config.before_initialize do
       require 'yaml_vault/rails'
       YamlVault::Rails.override_secrets(
         Settings.yaml_vault.key,
         Settings.yaml_vault.cryptor,
       )
+      Settings.reload!
     end
 
     config.paths.add 'lib/extras', eager_load: true
