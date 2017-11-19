@@ -29,6 +29,7 @@ gem 'turbolinks', '~> 5'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+gem 'aws-sdk', '~> 3'
 gem 'octokit'
 gem 'slim-rails'
 gem 'bootstrap'
