@@ -7,7 +7,8 @@ RSpec.describe RailsShowcase::ExceptionNotifier, type: :lib do
     context 'with exception backtrace' do
       let(:exception) { Exception.new('message') }
 
-      it 'logs to rails log' do
+      it 'send exception to sentry and write log to {RAILS_ENV}.log' do
+        expect(Raven).to receive(:capture_exception).with(exception)
         expect(Rails.logger).to receive(:error).with("[Exception] message")
 
         subject
@@ -21,7 +22,8 @@ RSpec.describe RailsShowcase::ExceptionNotifier, type: :lib do
         end
       end
 
-      it 'logs to rails log' do
+      it 'send exception to sentry and write log to {RAILS_ENV}.log' do
+        expect(Raven).to receive(:capture_exception).with(exception)
         expect(Rails.logger).to receive(:error).with("[Exception] message")
         expect(Rails.logger).to receive(:error).with("one\ntwo\nthree")
 
