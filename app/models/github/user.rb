@@ -27,6 +27,7 @@ module Github
     # @option options [String] :order Sort order (asc or desc)
     # @option options [Integer] :page Page of paginated results
     # @option options [Integer] :per_page Number of items per page
+    # @option options [Integer] :max_page Number of items max page
     # @return [Sawyer::Resource] Search results object
     # @see https://developer.github.com/v3/search/#search-users
     #
@@ -36,7 +37,8 @@ module Github
       # NOTE: GitHub Search api only provides up to 1,000 result.
       #       https://developer.github.com/v3/search/#about-the-search-api
       per_page = options[:per_page].presence || 100
-      max_page = (1000 % per_page).zero? ? 1000 / per_page : 1000 / per_page + 1
+      max_page = options[:max_page] if options[:max_page].present?
+      max_page ||= (1000 % per_page).zero? ? 1000 / per_page : 1000 / per_page + 1
       (1..max_page).each do |n|
         github_users(options.merge(page: n)).items.each do |user|
           yield user
