@@ -3,6 +3,7 @@ defaults: &defaults
     orders:
       - stargazers_count
       - pushed_at
+      - updated_at
   bulk_importer:
     user_columns:
       - login
