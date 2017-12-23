@@ -1,0 +1,8 @@
+div.menu
+  ul.nav.nav-tabs
+    li.nav-item
+      - activated = tab_activated?('stargazers_count')
+      = link_to 'Github stars', repositories_path(order: :stargazers_count), data: { toggle: :tab }, class: activated ? 'nav-link active' : 'nav-link'
+    li.nav-item
+      - activated = tab_activated?('rails_repositories')
+      = link_to 'Rails repositories', repositories_path(order: :pushed_at), data: { toggle: :tab }, class: activated ? 'nav-link active' : 'nav-link'
